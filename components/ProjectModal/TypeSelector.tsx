@@ -12,7 +12,7 @@ const TypeSelector = ({
   setType: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   return (
-    <div className="mt-2 flex space-x-2 w-full">
+    <div className="flex space-x-2 w-full">
       {projectTypes.map((type) => (
         <button
           key={type}

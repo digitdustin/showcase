@@ -14,7 +14,7 @@ const IconInput = ({
   type: string;
 }) => {
   return (
-    <div className="mt-2 w-full relative rounded-md border bg-slate-50 transition hover:bg-slate-100 flex justify-start items-center">
+    <div className="w-full relative rounded-md border bg-slate-50 transition hover:bg-slate-100 flex justify-start items-center">
       {React.createElement(icon, {
         className: "absolute left-4 my-auto h-5 w-5 text-slate-400",
       })}
