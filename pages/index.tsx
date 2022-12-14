@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
-import ProjectModal from "../components/ProjectModal";
+import ProjectModal from "../components/ProjectModal/ProjectModal";
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
