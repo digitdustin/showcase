@@ -9,6 +9,17 @@ module.exports = {
       transitionProperty: {
         height: "height",
       },
+      colors: {
+        dark: {
+          900: "#141414",
+          800: "#1B1B1B",
+          700: "#2D2D2D",
+          600: "#3D3D3D",
+        },
+      },
+      fontFamily: {
+        sans: ["DM Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],

@@ -19,6 +19,14 @@ const projectTypes = ["web", "app", "mobile"];
 
 export type ProjectType = typeof projectTypes[number];
 
+const ModalLabel = ({ label }: { label: string }) => (
+  <p className="text-sm text-gray-500 mb-2">{label}</p>
+);
+
+const ModalSection = ({ children }: { children: React.ReactNode }) => (
+  <div className="mt-4">{children}</div>
+);
+
 const ProjectModal = ({
   isOpen,
   onClose,
@@ -97,9 +105,9 @@ const ProjectModal = ({
           variants={variants}
           isVisible={showEditControls === true}
         >
-          <div className="mt-4">
-            <p className="text-sm text-gray-500">Preview</p>
-            <div className="mt-2 w-full border rounded-md bg-slate-100 transition hover:bg-slate-200 p-4 items-center flex justify-center">
+          <ModalSection>
+            <ModalLabel label="Preview" />
+            <div className="w-full border rounded-md bg-slate-100 transition hover:bg-slate-200 p-4 items-center flex justify-center">
               <div className="shadow-lg w-full h-full">
                 <ProjectBlock
                   type={projectType}
@@ -110,8 +118,8 @@ const ProjectModal = ({
                 />
               </div>
             </div>
-          </div>
-          <div className="mt-4">
+          </ModalSection>
+          <ModalSection>
             <Palette src={webImageURL}>
               {({ data, loading, error }) => {
                 if (loading) return <></>;
@@ -122,53 +130,53 @@ const ProjectModal = ({
                 }
               }}
             </Palette>
-            <p className="text-sm text-gray-500 mb-2">Card Color</p>
+            <ModalLabel label="Card Color" />
             <ColorPicker
               color={projectColor}
               setColor={setProjectColor}
               open={colorPickerOpen}
               setOpen={setColorPickerOpen}
             />
-          </div>
-          <div className="mt-4">
-            <p className="text-sm text-gray-500 mb-2">Project Type</p>
+          </ModalSection>
+          <ModalSection>
+            <ModalLabel label="Project Type" />
             <TypeSelector
               projectTypes={projectTypes}
               selectedType={projectType}
               setType={setProjectType}
             />
-          </div>
-          <div className="mt-4">
-            <p className="text-sm text-gray-500 mb-2">Description</p>
+          </ModalSection>
+          <ModalSection>
+            <ModalLabel label="Description" />
             <TextArea
               value={projectDescription}
               placeholder="Project Description"
               setValue={setProjectDescription}
             />
-          </div>
-          <div className="mt-4">
+          </ModalSection>
+          <ModalSection>
             <button className="w-full rounded-md text-center transition min-h-[44px] bg-blue-500 hover:bg-blue-600 py-3 group">
               <p className="text-white text-sm">Add Project</p>
             </button>
-          </div>
+          </ModalSection>
         </AnimateHeight>
         <AnimateHeight
           variants={variants}
           isVisible={showEditControls === false}
         >
-          <div className="mt-4">
-            <p className="text-sm text-gray-500 mb-2">Project Title</p>
+          <ModalSection>
+            <ModalLabel label="Project Title" />
             <Input
               value={projectName}
               placeholder="Project Title"
               type="text"
               setValue={setProjectName}
             />
-          </div>
+          </ModalSection>
 
           {/* Project Link */}
-          <div className="mt-4">
-            <p className="text-sm text-gray-500 mb-2">Project URL:</p>
+          <ModalSection>
+            <ModalLabel label="Project URL:" />
             <IconInput
               icon={LinkIcon}
               value={projectUrl}
@@ -176,11 +184,11 @@ const ProjectModal = ({
               type="text"
               setValue={setProjectUrl}
             />
-          </div>
-          <div className="mt-4">
+          </ModalSection>
+          <ModalSection>
             <button
               onClick={getProjectInfo}
-              className="w-full rounded-md text-center transition min-h-[44px] bg-blue-500 hover:bg-blue-600 py-3 group"
+              className="w-full rounded-md text-center transition min-h-[44px] bg-gradient-to-r from-indigo-400 to-fuchsia-400 py-3 group"
             >
               {siteShot.status === "loading" ? (
                 <div className="bouncing-loader">
@@ -192,7 +200,7 @@ const ProjectModal = ({
                 <p className="text-white text-sm">Generate</p>
               )}
             </button>
-          </div>
+          </ModalSection>
         </AnimateHeight>
       </Dialog.Panel>
     </Modal>
