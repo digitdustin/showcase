@@ -1,6 +1,7 @@
 import create from "zustand";
 
-type EditorStyle = "default" | "serif" | "mono";
+type EditorStyle = "default" | "serif" | "mono" | "grotesque";
+type FontSize = "small" | "base" | "large";
 
 interface EditorStyleStore {
   editorStyle: EditorStyle;

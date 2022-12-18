@@ -1,3 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;600;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/ambit');
+
+@font-face {
+    font-family: "Grotesque";
+    src: url("../public/fonts/Adero-Regular.otf");
+    weight: 100;
+  }
+
+    @font-face {
+        font-family: "Grotesque";
+        src: url("../public/fonts/Adero-SemiBold.otf");
+        weight: 700;
+    }
+
+

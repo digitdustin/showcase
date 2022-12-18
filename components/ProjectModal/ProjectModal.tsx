@@ -20,7 +20,7 @@ const projectTypes = ["web", "app", "mobile"];
 export type ProjectType = typeof projectTypes[number];
 
 const ModalLabel = ({ label }: { label: string }) => (
-  <p className="text-sm text-gray-500 mb-2">{label}</p>
+  <p className="mb-2 text-sm text-gray-500">{label}</p>
 );
 
 const ModalSection = ({ children }: { children: React.ReactNode }) => (
@@ -90,7 +90,7 @@ const ProjectModal = ({
           {showEditControls ? (
             <div className="flex items-center">
               <div
-                className="h-6 w-6 mr-2 flex items-center cursor-pointer"
+                className="mr-2 flex h-6 w-6 cursor-pointer items-center"
                 onClick={() => setShowEditControls(false)}
               >
                 <ArrowLeftIcon className="h-5 w-5 text-blue-500" />
@@ -107,14 +107,16 @@ const ProjectModal = ({
         >
           <ModalSection>
             <ModalLabel label="Preview" />
-            <div className="w-full border rounded-md bg-slate-100 transition hover:bg-slate-200 p-4 items-center flex justify-center">
-              <div className="shadow-lg w-full h-full">
+            <div className="flex w-full items-center justify-center rounded-md border bg-slate-100 p-4 transition hover:bg-slate-200">
+              <div className="h-full w-full shadow-lg">
                 <ProjectBlock
                   type={projectType}
                   name={projectName}
                   color={projectColor}
-                  webImage={webImageURL}
-                  mobileImage={mobileImageURL}
+                  webImage={testImageURL}
+                  mobileImage={testMobileImageURL}
+                  setWebImage={setTestImageURL}
+                  setMobileImage={setTestMobileImageURL}
                 />
               </div>
             </div>
@@ -136,6 +138,7 @@ const ProjectModal = ({
               setColor={setProjectColor}
               open={colorPickerOpen}
               setOpen={setColorPickerOpen}
+              position="left"
             />
           </ModalSection>
           <ModalSection>
@@ -155,8 +158,8 @@ const ProjectModal = ({
             />
           </ModalSection>
           <ModalSection>
-            <button className="w-full rounded-md text-center transition min-h-[44px] bg-blue-500 hover:bg-blue-600 py-3 group">
-              <p className="text-white text-sm">Add Project</p>
+            <button className="group min-h-[44px] w-full rounded-md bg-blue-500 py-3 text-center transition hover:bg-blue-600">
+              <p className="text-sm text-white">Add Project</p>
             </button>
           </ModalSection>
         </AnimateHeight>
@@ -188,7 +191,7 @@ const ProjectModal = ({
           <ModalSection>
             <button
               onClick={getProjectInfo}
-              className="w-full rounded-md text-center transition min-h-[44px] bg-gradient-to-r from-indigo-400 to-fuchsia-400 py-3 group"
+              className="group min-h-[44px] w-full rounded-md bg-gradient-to-r from-indigo-400 to-fuchsia-400 py-3 text-center transition"
             >
               {siteShot.status === "loading" ? (
                 <div className="bouncing-loader">
@@ -197,7 +200,7 @@ const ProjectModal = ({
                   <div className="" />
                 </div>
               ) : (
-                <p className="text-white text-sm">Generate</p>
+                <p className="text-sm text-white">Generate</p>
               )}
             </button>
           </ModalSection>

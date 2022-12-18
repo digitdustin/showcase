@@ -7,7 +7,10 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/24/solid";
 import { SocialIcon } from "react-social-icons";
-import { ClipboardIcon } from "@heroicons/react/24/outline";
+import {
+  AdjustmentsHorizontalIcon,
+  ClipboardIcon,
+} from "@heroicons/react/24/outline";
 import { testBio, testName } from "../constants/testData";
 import TextareaAutosize from "react-textarea-autosize";
 import { useEditorStylesStore } from "../stores/useEditorStylesStore";
@@ -21,6 +24,7 @@ const fontClassMap = {
   default: "font-sans",
   serif: "font-serif",
   mono: "font-mono",
+  grotesque: "font-grotesque",
 };
 
 export default function Home() {
@@ -35,7 +39,7 @@ export default function Home() {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
 
   return (
-    <div className="flex h-full min-h-screen w-full flex-col bg-slate-50">
+    <div className="flex h-screen min-h-screen w-full flex-col bg-slate-50">
       {/* Logo Header */}
       <EditorHeader />
       {/* Settings Header */}
@@ -43,30 +47,48 @@ export default function Home() {
         {/* Settings Header */}
         <div></div>
         {/* Font Select */}
-        <div className="flex items-center space-x-2 text-white">
+        <div className="flex h-full space-x-2">
+          <div className="flex items-center space-x-2 text-white">
+            <p
+              onClick={() => setEditorStyle("default")}
+              className={`${
+                editorStyle === "default" ? "bg-dark-700" : ""
+              } cursor-pointer rounded-md px-3 py-2 font-sans transition hover:bg-dark-700`}
+            >
+              Aa
+            </p>
+            <p
+              onClick={() => setEditorStyle("serif")}
+              className={`${
+                editorStyle === "serif" ? "bg-dark-700" : ""
+              } cursor-pointer rounded-md px-3 py-2 font-serif transition hover:bg-dark-700`}
+            >
+              Aa
+            </p>
+            <p
+              onClick={() => setEditorStyle("mono")}
+              className={`${
+                editorStyle === "mono" ? "bg-dark-700" : ""
+              } cursor-pointer rounded-md px-3 py-2 font-mono transition hover:bg-dark-700`}
+            >
+              Aa
+            </p>
+            <p
+              onClick={() => {
+                setEditorStyle("grotesque");
+              }}
+              className={`${
+                editorStyle === "grotesque" ? "bg-dark-700" : ""
+              } cursor-pointer rounded-md px-3 py-2 font-grotesque transition hover:bg-dark-700`}
+            >
+              Aa
+            </p>
+          </div>
+          <div className="h-full w-px bg-indigo-50/10" />
           <p
-            onClick={() => setEditorStyle("default")}
-            className={`${
-              editorStyle === "default" ? "bg-dark-700" : ""
-            } cursor-pointer rounded-md px-3 py-2 font-sans transition hover:bg-dark-700`}
+            className={`flex cursor-pointer items-center rounded-md px-3 py-2 font-mono text-white transition hover:bg-dark-700`}
           >
-            Aa
-          </p>
-          <p
-            onClick={() => setEditorStyle("serif")}
-            className={`${
-              editorStyle === "serif" ? "bg-dark-700" : ""
-            } cursor-pointer rounded-md px-3 py-2 font-serif transition hover:bg-dark-700`}
-          >
-            Aa
-          </p>
-          <p
-            onClick={() => setEditorStyle("mono")}
-            className={`${
-              editorStyle === "mono" ? "bg-dark-700" : ""
-            } cursor-pointer rounded-md px-3 py-2 font-mono transition hover:bg-dark-700`}
-          >
-            Aa
+            <AdjustmentsHorizontalIcon className="h-4 w-4" />
           </p>
         </div>
       </div>
@@ -76,16 +98,16 @@ export default function Home() {
         onClose={() => setProjectModalOpen(false)}
       />
       <div
-        className={`h-full w-full bg-slate-200 p-4 ${fontClassMap[editorStyle]}`}
+        className={`h-auto w-full overflow-y-auto bg-slate-200 p-4 ${fontClassMap[editorStyle]}`}
       >
         {/* Header */}
-        <div className="h-full w-full rounded-md bg-white">
-          <div className="relative h-52 w-full rounded-t-md bg-red-500">
+        <div className="h-auto w-full rounded-md bg-white pb-4">
+          <div className="relative h-52 w-full rounded-t-md">
             {/* Change Banner Image */}
             <div className="group absolute inset-0 z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-t-md transition hover:bg-black/30">
               <div className="flex items-center space-x-2 opacity-0 transition group-hover:opacity-100">
                 <CameraIcon className="h-5 w-5 text-white" />
-                <span className="text-sm font-semibold text-white">
+                <span className="font-sans text-sm font-semibold text-white">
                   Change Banner Image
                 </span>
               </div>
@@ -110,7 +132,7 @@ export default function Home() {
           <div className="mx-auto mb-8 w-full max-w-4xl px-8 pt-24 pb-8 sm:px-10 md:px-20">
             <input
               type="text"
-              className={`w-full rounded-md text-center text-4xl font-semibold text-slate-800 transition-all hover:bg-slate-100 hover:p-2 md:w-auto md:text-left ${
+              className={`w-full rounded-md text-center text-2xl font-semibold text-slate-800 transition-all hover:bg-slate-100 hover:p-2 md:w-auto md:text-left ${
                 editingName ? "bg-slate-100 p-2" : ""
               }`}
               onFocus={() => setEditingName(true)}
@@ -161,7 +183,8 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 py-8 px-8 sm:px-10 md:px-20">
+          <div className="h-20"></div>
+          <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 px-8 sm:px-10 md:px-20">
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-semibold text-slate-800">
                 Projects

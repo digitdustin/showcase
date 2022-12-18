@@ -1,11 +1,15 @@
-import { ClipboardIcon } from "@heroicons/react/24/outline";
+import {
+  ClipboardIcon,
+  AdjustmentsHorizontalIcon,
+  DocumentCheckIcon,
+} from "@heroicons/react/24/outline";
 import React from "react";
 import HeaderLogo from "./HeaderLogo";
 
 const EditorHeader = () => {
   return (
-    <div className="h-16 w-full border-b border-b-dark-700 bg-dark-900">
-      <div className="mx-auto flex h-full w-full items-center justify-between px-6">
+    <div className="w-full border-b border-b-dark-700 bg-dark-900 py-2">
+      <div className="mx-auto flex h-full w-full items-center justify-between px-4 sm:px-6">
         <div className="flex items-center">
           <div className="mr-4 h-7 w-7 rounded-full">
             <HeaderLogo />
@@ -26,7 +30,10 @@ const EditorHeader = () => {
             <div className="absolute inset-0 z-10 h-full w-full scale-[4] bg-gradient-to-br from-black to-transparent transition duration-500 group-hover:rotate-180" />
             <div className="absolute inset-0 scale-[4] bg-fuchsia-400  transition-all duration-500 group-hover:bg-indigo-400"></div>
             <span className="z-10 rounded-md bg-dark-900 px-4 py-2 text-sm">
-              Project Settings
+              <p className="flex items-center">
+                Save
+                <span className="hidden sm:block">&nbsp;Changes</span>
+              </p>
             </span>
           </button>
         </div>
