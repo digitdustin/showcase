@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import ProjectModal from "../components/ProjectModal/ProjectModal";
 import HeaderLogo from "../components/shared/HeaderLogo";
 import {
@@ -8,14 +8,34 @@ import {
 } from "@heroicons/react/24/solid";
 import { SocialIcon } from "react-social-icons";
 import { ClipboardIcon } from "@heroicons/react/24/outline";
+import { testBio, testName } from "../constants/testData";
+import TextareaAutosize from "react-textarea-autosize";
+import { useEditorStylesStore } from "../stores/useEditorStylesStore";
 
 const SOCIAL_CLASSNAME =
   "opacity-80 transition hover:opacity-100 hover:-translate-y-[3px]";
 const SOCIAL_STYLE = { height: 40, width: 40 };
 
+const MIN_TEXTAREA_HEIGHT = 32;
+
+const fontClassMap = {
+  default: "font-sans",
+  serif: "font-serif",
+  mono: "font-mono",
+};
+
 export default function Home() {
+  const editorStyle = useEditorStylesStore((state) => state.editorStyle);
+  const setEditorStyle = useEditorStylesStore((state) => state.setEditorStyle);
+
   const [projects, setProjects] = useState([]);
+  const [name, setName] = useState(testName);
+  const [bio, setBio] = useState(testBio);
+  const [editingName, setEditingName] = useState(false);
+  const [editingBio, setEditingBio] = useState(false);
   const [projectModalOpen, setProjectModalOpen] = useState(false);
+
+  const [fontClassName, setFontClassName] = useState(fontClassMap[editorStyle]);
 
   return (
     <div className="flex h-full min-h-screen w-full flex-col bg-slate-50">
@@ -49,15 +69,45 @@ export default function Home() {
         </div>
       </div>
       {/* Settings Header */}
-      <div className="flex h-12 w-full items-center justify-center border-b border-b-dark-600 bg-dark-800">
+      <div className="flex w-full items-center justify-between border-b border-b-dark-600 bg-dark-800 px-6 py-2">
         {/* Settings Header */}
+        <div></div>
+        {/* Font Select */}
+        <div className="flex items-center space-x-2 text-white">
+          <p
+            onClick={() => setEditorStyle("default")}
+            className={`${
+              editorStyle === "default" ? "bg-dark-700" : ""
+            } cursor-pointer rounded-md px-3 py-2 font-sans transition hover:bg-dark-700`}
+          >
+            Aa
+          </p>
+          <p
+            onClick={() => setEditorStyle("serif")}
+            className={`${
+              editorStyle === "serif" ? "bg-dark-700" : ""
+            } cursor-pointer rounded-md px-3 py-2 font-serif transition hover:bg-dark-700`}
+          >
+            Aa
+          </p>
+          <p
+            onClick={() => setEditorStyle("mono")}
+            className={`${
+              editorStyle === "mono" ? "bg-dark-700" : ""
+            } cursor-pointer rounded-md px-3 py-2 font-mono transition hover:bg-dark-700`}
+          >
+            Aa
+          </p>
+        </div>
       </div>
       {/* Project Modal */}
       <ProjectModal
         isOpen={projectModalOpen}
         onClose={() => setProjectModalOpen(false)}
       />
-      <div className="h-full w-full bg-slate-200 p-4">
+      <div
+        className={`h-full w-full bg-slate-200 p-4 ${fontClassMap[editorStyle]}`}
+      >
         {/* Header */}
         <div className="h-full w-full rounded-md bg-white">
           <div className="relative h-52 w-full rounded-t-md bg-red-500">
@@ -87,14 +137,27 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="mx-auto mb-8 w-full max-w-4xl px-20 pt-24 pb-8">
-            <h1 className="text-center text-4xl font-semibold text-slate-800 md:text-left">
-              Dustin Karp
-            </h1>
-            <p className="mt-4 text-center text-lg text-slate-800 md:text-left">
-              I'm a software engineer and designer based in Boston, MA. I do a
-              lot of frontend and fullstack dev. Check me out on my socials!
-            </p>
+          <div className="mx-auto mb-8 w-full max-w-4xl px-8 pt-24 pb-8 sm:px-10 md:px-20">
+            <input
+              type="text"
+              className={`w-full rounded-md text-center text-4xl font-semibold text-slate-800 transition-all hover:bg-slate-100 hover:p-2 md:w-auto md:text-left ${
+                editingName ? "bg-slate-100 p-2" : ""
+              }`}
+              onFocus={() => setEditingName(true)}
+              onBlur={() => setEditingName(false)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextareaAutosize
+              className={`mt-4 h-auto w-full resize-none rounded-md text-center text-lg text-slate-800 transition-all hover:bg-slate-100 hover:px-2 md:text-left ${
+                editingBio ? "bg-slate-100 px-2" : ""
+              }`}
+              spellCheck="false"
+              onFocus={() => setEditingBio(true)}
+              onBlur={() => setEditingBio(false)}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
             <div className="mt-4 flex flex-row justify-center space-x-3  md:justify-start">
               <SocialIcon
                 network="github"
@@ -128,22 +191,22 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 py-8 px-20">
+          <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 py-8 px-8 sm:px-10 md:px-20">
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-semibold text-slate-800">
                 Projects
               </h1>
               <button
                 onClick={() => setProjectModalOpen(true)}
-                className="flex items-center space-x-2 rounded-md bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 text-sm text-white"
+                className="flex items-center space-x-2 rounded-md bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 font-sans text-sm text-white"
               >
                 <p>Add Project</p>
                 <PlusIcon className="h-4 w-4 text-white" />
               </button>
             </div>
-            <div className="flex w-full flex-col items-center justify-center space-y-2 rounded-md bg-slate-100 py-8 transition">
+            <div className="flex w-full flex-col items-center justify-center space-y-2 rounded-md bg-slate-100 p-4 py-8 transition">
               <PlusCircleIcon className="h-8 w-8 text-slate-400" />
-              <p className="ml-2 text-slate-500">
+              <p className="ml-2 text-center font-sans text-slate-500">
                 You currently have no projects... Click add to create one!
               </p>
             </div>

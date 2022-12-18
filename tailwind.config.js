@@ -19,6 +19,8 @@ module.exports = {
       },
       fontFamily: {
         sans: ["DM Sans", "sans-serif"],
+        serif: ["Source Serif Pro", "serif"],
+        mono: ["Chivo Mono", "monospace"],
       },
     },
   },
