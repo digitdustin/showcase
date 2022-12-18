@@ -18,30 +18,30 @@ export default function Home() {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
 
   return (
-    <div className="w-full min-h-screen bg-slate-50 h-full flex flex-col">
+    <div className="flex h-full min-h-screen w-full flex-col bg-slate-50">
       {/* Logo Header */}
-      <div className="w-full bg-dark-900 h-16 border-b border-b-dark-700">
-        <div className="w-full mx-auto h-full flex items-center justify-between px-6">
+      <div className="h-16 w-full border-b border-b-dark-700 bg-dark-900">
+        <div className="mx-auto flex h-full w-full items-center justify-between px-6">
           <div className="flex items-center">
-            <div className="w-7 h-7 rounded-full mr-4">
+            <div className="mr-4 h-7 w-7 rounded-full">
               <HeaderLogo />
             </div>
-            <h1 className="text-white text-lg font-semibold mr-2">Showcase</h1>
-            <p className="px-1 py-px rounded-sm font-semibold bg-gradient-to-br from-fuchsia-400 to-indigo-400 text-xs">
+            <h1 className="mr-2 text-lg font-semibold text-white">Showcase</h1>
+            <p className="rounded-sm bg-gradient-to-br from-fuchsia-400 to-indigo-400 px-1 py-px text-xs font-semibold">
               PRO
             </p>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="text-white/70 flex cursor-pointer group justify-between bg-indigo-50/10 border border-indigo-50/20 rounded-md text-sm">
+            <div className="group hidden cursor-pointer justify-between rounded-md border border-indigo-50/20 bg-indigo-50/10 text-sm text-white/70 sm:flex">
               <p className="py-1 px-6">showcase.co/digitdustin</p>
-              <div className="flex items-center rounded-r-[5px] justify-center border-l border-l-indigo-50/20 bg-indigo-50/10 group-hover:bg-indigo-50/20 transition px-2">
+              <div className="flex items-center justify-center rounded-r-[5px] border-l border-l-indigo-50/20 bg-indigo-50/10 px-2 transition group-hover:bg-indigo-50/20">
                 <ClipboardIcon className="h-4 w-4 text-white/70" />
               </div>
             </div>
-            <button className="p-[2px] relative rounded-lg flex items-center justify-center group overflow-hidden transition hover:text-white text-white/90 duration-500">
-              <div className="group-hover:rotate-180 transition duration-500 scale-[4] bg-gradient-to-br from-black to-transparent w-full inset-0 h-full absolute z-10" />
-              <div className="absolute inset-0 scale-[4] group-hover:bg-indigo-400  bg-fuchsia-400 transition-all duration-500"></div>
-              <span className="px-4 py-2 text-sm rounded-md bg-dark-900 z-10">
+            <button className="group relative flex items-center justify-center overflow-hidden rounded-lg p-[2px] text-white/90 transition duration-500 hover:text-white">
+              <div className="absolute inset-0 z-10 h-full w-full scale-[4] bg-gradient-to-br from-black to-transparent transition duration-500 group-hover:rotate-180" />
+              <div className="absolute inset-0 scale-[4] bg-fuchsia-400  transition-all duration-500 group-hover:bg-indigo-400"></div>
+              <span className="z-10 rounded-md bg-dark-900 px-4 py-2 text-sm">
                 Project Settings
               </span>
             </button>
@@ -49,7 +49,7 @@ export default function Home() {
         </div>
       </div>
       {/* Settings Header */}
-      <div className="w-full h-12 bg-dark-800 border-b border-b-dark-600 flex justify-center items-center">
+      <div className="flex h-12 w-full items-center justify-center border-b border-b-dark-600 bg-dark-800">
         {/* Settings Header */}
       </div>
       {/* Project Modal */}
@@ -57,45 +57,45 @@ export default function Home() {
         isOpen={projectModalOpen}
         onClose={() => setProjectModalOpen(false)}
       />
-      <div className="w-full h-full p-4 bg-slate-200">
+      <div className="h-full w-full bg-slate-200 p-4">
         {/* Header */}
-        <div className="w-full h-full rounded-md bg-white">
-          <div className="w-full h-52 bg-red-500 rounded-t-md relative">
+        <div className="h-full w-full rounded-md bg-white">
+          <div className="relative h-52 w-full rounded-t-md bg-red-500">
             {/* Change Banner Image */}
-            <div className="w-full h-full hover:bg-black/30 group rounded-t-md z-10 transition absolute inset-0 cursor-pointer flex items-center justify-center">
-              <div className="flex items-center space-x-2 group-hover:opacity-100 opacity-0 transition">
+            <div className="group absolute inset-0 z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-t-md transition hover:bg-black/30">
+              <div className="flex items-center space-x-2 opacity-0 transition group-hover:opacity-100">
                 <CameraIcon className="h-5 w-5 text-white" />
-                <span className="text-white text-sm font-semibold">
+                <span className="text-sm font-semibold text-white">
                   Change Banner Image
                 </span>
               </div>
             </div>
             <img
               src="https://media.istockphoto.com/id/1411253803/photo/universal-linkedin-banner-with-pink-sunset-over-the-alps-for-any-profession.jpg?b=1&s=170667a&w=0&k=20&c=V3-D3Hc47eMkqbyPDOvQRqcsCrwZPTckg_1OdDWYoS8="
-              className="w-full h-full object-cover rounded-t-md absolute"
+              className="absolute h-full w-full rounded-t-md object-cover"
             />
-            <div className="max-w-4xl h-52 w-full relative mx-auto">
-              <div className="absolute z-20 w-36 h-36 rounded-full border-white border-4 bg-slate-600 -bottom-20 left-20">
+            <div className="relative mx-auto h-52 w-full max-w-4xl">
+              <div className="absolute -bottom-20 left-1/2 z-20 h-36 w-36 -translate-x-1/2 rounded-full border-4 border-white bg-slate-600 md:left-20 md:translate-x-0">
                 {/* Change Avatar Image */}
-                <div className="w-full rounded-full group h-full hover:bg-black/30 group z-10 transition absolute inset-0 cursor-pointer flex items-center justify-center">
-                  <CameraIcon className="h-5 w-5 text-white opacity-0 group-hover:opacity-100 transition" />
+                <div className="group group absolute inset-0 z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-full transition hover:bg-black/30">
+                  <CameraIcon className="h-5 w-5 text-white opacity-0 transition group-hover:opacity-100" />
                 </div>
                 <img
                   src="https://github.com/digitdustin.png"
-                  className="w-full h-full rounded-full"
+                  className="h-full w-full rounded-full"
                 />
               </div>
             </div>
           </div>
-          <div className="max-w-4xl w-full mx-auto pt-24 pb-8 px-20 mb-8">
-            <h1 className="text-4xl font-semibold text-slate-800">
+          <div className="mx-auto mb-8 w-full max-w-4xl px-20 pt-24 pb-8">
+            <h1 className="text-center text-4xl font-semibold text-slate-800 md:text-left">
               Dustin Karp
             </h1>
-            <p className="text-slate-800 text-lg mt-4">
+            <p className="mt-4 text-center text-lg text-slate-800 md:text-left">
               I'm a software engineer and designer based in Boston, MA. I do a
               lot of frontend and fullstack dev. Check me out on my socials!
             </p>
-            <div className="mt-4 flex flex-row space-x-3">
+            <div className="mt-4 flex flex-row justify-center space-x-3  md:justify-start">
               <SocialIcon
                 network="github"
                 url="https://github.com/digitdustin"
@@ -128,22 +128,22 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="max-w-4xl w-full mx-auto py-8 px-20 mb-8 space-y-4">
-            <div className="flex justify-between items-center">
+          <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 py-8 px-20">
+            <div className="flex items-center justify-between">
               <h1 className="text-2xl font-semibold text-slate-800">
                 Projects
               </h1>
               <button
                 onClick={() => setProjectModalOpen(true)}
-                className="bg-gradient-to-br flex space-x-2 items-center text-white from-indigo-400 to-fuchsia-400 py-2 px-4 text-sm rounded-md"
+                className="flex items-center space-x-2 rounded-md bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 text-sm text-white"
               >
                 <p>Add Project</p>
                 <PlusIcon className="h-4 w-4 text-white" />
               </button>
             </div>
-            <div className="w-full rounded-md bg-slate-100 transition py-8 items-center flex flex-col space-y-2 justify-center">
+            <div className="flex w-full flex-col items-center justify-center space-y-2 rounded-md bg-slate-100 py-8 transition">
               <PlusCircleIcon className="h-8 w-8 text-slate-400" />
-              <p className="text-slate-500 ml-2">
+              <p className="ml-2 text-slate-500">
                 You currently have no projects... Click add to create one!
               </p>
             </div>
