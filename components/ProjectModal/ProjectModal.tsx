@@ -136,8 +136,6 @@ const ProjectModal = ({
             <ColorPicker
               color={projectColor}
               setColor={setProjectColor}
-              open={colorPickerOpen}
-              setOpen={setColorPickerOpen}
               position="left"
             />
           </ModalSection>

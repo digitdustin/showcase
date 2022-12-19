@@ -1,14 +1,21 @@
 import create from "zustand";
 
-type EditorStyle = "default" | "serif" | "mono" | "grotesque";
-type FontSize = "small" | "base" | "large";
+export type EditorStyle = "default" | "serif" | "mono" | "grotesque";
 
 interface EditorStyleStore {
   editorStyle: EditorStyle;
   setEditorStyle: (editorStyle: EditorStyle) => void;
+  backgroundColor: string;
+  setBackgroundColor: (backgroundColor: string) => void;
+  textColor: string;
+  setTextColor: (textColor: string) => void;
 }
 
 export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
   editorStyle: "default",
   setEditorStyle: (editorStyle: EditorStyle) => set({ editorStyle }),
+  backgroundColor: "#ffffff",
+  setBackgroundColor: (backgroundColor: string) => set({ backgroundColor }),
+  textColor: "#000000",
+  setTextColor: (textColor: string) => set({ textColor }),
 }));

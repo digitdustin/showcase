@@ -16,7 +16,7 @@ const HeaderLogo = () => {
         rx="3"
         transform="rotate(-180 44 34)"
         fill="url(#paint0_linear_21_6)"
-        fill-opacity="0.8"
+        fillOpacity="0.8"
       />
       <rect
         y="8"
@@ -24,7 +24,7 @@ const HeaderLogo = () => {
         height="34"
         rx="3"
         fill="url(#paint1_linear_21_6)"
-        fill-opacity="0.8"
+        fillOpacity="0.8"
       />
       <defs>
         <linearGradient
@@ -35,8 +35,8 @@ const HeaderLogo = () => {
           y2="55.8501"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#818CF8" stop-opacity="0.54" />
-          <stop offset="1" stop-color="#E964A2" />
+          <stop stopColor="#818CF8" stopOpacity="0.54" />
+          <stop offset="1" stopColor="#E964A2" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_21_6"
@@ -46,8 +46,8 @@ const HeaderLogo = () => {
           y2="29.8501"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#818CF8" stop-opacity="0.54" />
-          <stop offset="1" stop-color="#E964A2" />
+          <stop stopColor="#818CF8" stopOpacity="0.54" />
+          <stop offset="1" stopColor="#E964A2" />
         </linearGradient>
       </defs>
     </svg>

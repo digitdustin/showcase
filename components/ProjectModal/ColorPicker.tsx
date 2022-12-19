@@ -5,27 +5,29 @@ import { TwitterPicker } from "react-color";
 const ColorPicker = ({
   color,
   setColor,
-  open,
-  setOpen,
   position,
+  hideSwatch,
+  colors,
 }: {
   color: string;
-  setColor: React.Dispatch<React.SetStateAction<string>>;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setColor:
+    | React.Dispatch<React.SetStateAction<string>>
+    | ((backgroundColor: string) => void);
   position: "left" | "right";
+  hideSwatch?: boolean;
+  colors?: string[];
 }) => {
   return (
     <Popover
       style={{ backgroundColor: color }}
-      className="relative !aspect-square h-10 w-10 rounded-md transition"
+      className={`!aspect-square rounded-md transition ${
+        hideSwatch
+          ? "absolute inset-0 h-full w-full !bg-transparent"
+          : "relative h-10 w-10"
+      }`}
     >
-      <Popover.Button
-        onClick={() => setOpen(!open)}
-        className="h-10 w-10"
-      ></Popover.Button>
+      <Popover.Button className="h-full w-full"></Popover.Button>
       <Transition
-        show={open}
         as={Fragment}
         enter="ease-out duration-300"
         enterFrom="opacity-0 scale-95"
@@ -42,6 +44,8 @@ const ColorPicker = ({
           <TwitterPicker
             triangle={position === "left" ? "top-left" : "top-right"}
             onChange={(color: any) => setColor(color.hex)}
+            colors={colors && colors.length > 0 ? colors : undefined}
+            color={color}
           />
         </Popover.Panel>
       </Transition>
