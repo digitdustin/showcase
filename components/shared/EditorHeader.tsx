@@ -14,14 +14,14 @@ const EditorHeader = () => {
           <div className="mr-4 h-7 w-7 rounded-full">
             <HeaderLogo />
           </div>
-          <h1 className="mr-2 text-lg font-semibold text-white">Showcase</h1>
+          <h1 className="mr-2 text-lg font-semibold text-white">Totem</h1>
           <p className="rounded-sm bg-gradient-to-br from-fuchsia-400 to-indigo-400 px-1 py-px text-xs font-semibold">
             PRO
           </p>
         </div>
         <div className="flex items-center space-x-4">
           <div className="group hidden cursor-pointer justify-between rounded-md border border-indigo-50/20 bg-indigo-50/10 text-sm text-white/70 sm:flex">
-            <p className="py-1 px-6">showcase.co/digitdustin</p>
+            <p className="py-1 px-6">totem.co/digitdustin</p>
             <div className="flex items-center justify-center rounded-r-[5px] border-l border-l-indigo-50/20 bg-indigo-50/10 px-2 transition group-hover:bg-indigo-50/20">
               <ClipboardIcon className="h-4 w-4 text-white/70" />
             </div>

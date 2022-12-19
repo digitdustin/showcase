@@ -9,7 +9,8 @@ import {
 import { SocialIcon } from "react-social-icons";
 import {
   AdjustmentsHorizontalIcon,
-  SwatchIcon,
+  QueueListIcon,
+  Squares2X2Icon,
 } from "@heroicons/react/24/outline";
 import {
   backgroundColors,
@@ -27,6 +28,7 @@ import EditorHeader from "../components/shared/EditorHeader";
 import { Social } from "../constants/editor/types";
 import Tooltip from "../components/shared/Tooltip";
 import ColorPicker from "../components/ProjectModal/ColorPicker";
+import SocialLink from "../components/Editor/SocialLink";
 
 interface FontStyle {
   [key: string]: {
@@ -83,11 +85,12 @@ export default function Home() {
     "https://github.com/digitdustin.png"
   );
   const [socials, setSocials] = useState<Social[]>(testSocials);
+  const [extendSocials, setExtendSocials] = useState<boolean>(false);
 
-  const [editingName, setEditingName] = useState(false);
-  const [editingBio, setEditingBio] = useState(false);
+  const [editingName, setEditingName] = useState<boolean>(false);
+  const [editingBio, setEditingBio] = useState<boolean>(false);
 
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
 
   return (
     <div className="flex h-screen min-h-screen w-full flex-col bg-slate-50">
@@ -126,6 +129,24 @@ export default function Home() {
           </div>
           <Divider />
           <div className="flex items-center space-x-2 text-white">
+            <button
+              onClick={() => setExtendSocials(!extendSocials)}
+              className={`group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition hover:bg-dark-700 ${
+                extendSocials ? "bg-dark-700" : ""
+              }`}
+            >
+              <Tooltip position="bottom">
+                {extendSocials ? "Collapse" : "Extend"}&nbsp;Socials
+              </Tooltip>
+              {extendSocials ? (
+                <Squares2X2Icon className="h-5 w-5" />
+              ) : (
+                <QueueListIcon className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+          <Divider />
+          <div className="flex items-center space-x-2 text-white">
             {Object.values(fontClassMap).map((font) => {
               return (
                 <button
@@ -133,7 +154,7 @@ export default function Home() {
                   onClick={() => setEditorStyle(font.value)}
                   className={`${
                     editorStyle === font.value ? "bg-dark-700" : ""
-                  } group relative cursor-pointer rounded-md px-3 py-2 font-sans transition hover:bg-dark-700`}
+                  } group relative aspect-square w-10 cursor-pointer rounded-md font-sans transition hover:bg-dark-700`}
                 >
                   <Tooltip position="bottom">{font.label}</Tooltip>
                   Aa
@@ -211,7 +232,7 @@ export default function Home() {
               onChange={(e) => setName(e.target.value)}
             />
             <TextareaAutosize
-              className={`mt-4 h-auto w-full resize-none rounded-md text-center text-lg transition-all hover:bg-sky-400/20 hover:px-2 md:text-left ${
+              className={`mt-4 h-auto w-full resize-none rounded-md text-center text-base transition-all hover:bg-sky-400/20 hover:px-2 sm:text-lg md:text-left ${
                 editingBio ? "bg-sky-400/20 px-2" : "bg-transparent"
               }`}
               spellCheck="false"
@@ -220,28 +241,21 @@ export default function Home() {
               value={bio}
               onChange={(e) => setBio(e.target.value)}
             />
-            <div className="mt-4 flex flex-row justify-center space-x-3  md:justify-start">
+            <div
+              className={`mt-4 flex ${
+                extendSocials
+                  ? "w-full flex-col space-y-3"
+                  : "justify-center space-x-3 md:justify-start"
+              }`}
+            >
               {socials.map((social) => (
-                <div
+                <SocialLink
                   key={social.network}
-                  className="relative flex rounded-full bg-white transition hover:-translate-y-[3px]"
-                >
-                  <SocialIcon
-                    network={social.network}
-                    url={social.url}
-                    fgColor="#ffffff"
-                    className={`!h-10 !w-10 transition ${
-                      editorStyle === "grotesque"
-                        ? "z-10 -translate-y-[3px] -translate-x-[3px] rounded-full border-2 border-dark-700 hover:translate-y-0 hover:translate-x-0"
-                        : "opacity-80 hover:opacity-100"
-                    }`}
-                  />
-                  {editorStyle === "grotesque" && (
-                    <div
-                      className={`absolute inset-0 z-0 h-10 w-10 rounded-full border-[6px] border-dark-700`}
-                    />
-                  )}
-                </div>
+                  network={social.network}
+                  url={social.url}
+                  extend={extendSocials}
+                  editorStyle={editorStyle}
+                />
               ))}
             </div>
           </div>
