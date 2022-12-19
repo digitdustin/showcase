@@ -11,7 +11,7 @@ const EditorHeader = () => {
     <div className="w-full border-b border-b-dark-700 bg-dark-900 py-2">
       <div className="mx-auto flex h-full w-full items-center justify-between px-4 sm:px-6">
         <div className="flex items-center">
-          <div className="mr-4 h-7 w-7 rounded-full">
+          <div className="mr-2 h-6 w-auto rounded-full">
             <HeaderLogo />
           </div>
           <h1 className="mr-2 text-lg font-semibold text-white">Totem</h1>
@@ -21,7 +21,7 @@ const EditorHeader = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="group hidden cursor-pointer justify-between rounded-md border border-indigo-50/20 bg-indigo-50/10 text-sm text-white/70 sm:flex">
-            <p className="py-1 px-6">totem.co/digitdustin</p>
+            <p className="py-1 px-6">totem.bio/digitdustin</p>
             <div className="flex items-center justify-center rounded-r-[5px] border-l border-l-indigo-50/20 bg-indigo-50/10 px-2 transition group-hover:bg-indigo-50/20">
               <ClipboardIcon className="h-4 w-4 text-white/70" />
             </div>

@@ -213,7 +213,7 @@ export const colorCombos: ColorCombo[] = [
     },
     color2: {
       name: "Mustard",
-      color: "#E2V144",
+      color: "#E2B144",
     },
   },
   {

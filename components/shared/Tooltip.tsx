@@ -3,9 +3,11 @@ import React, { ReactNode } from "react";
 const Tooltip = ({
   children,
   position = "top",
+  interactive = false,
 }: {
   children: ReactNode;
   position?: "top" | "bottom" | "left" | "right";
+  interactive?: boolean;
 }) => {
   const positionClasses = {
     bottom: {
@@ -28,7 +30,9 @@ const Tooltip = ({
 
   return (
     <div
-      className={`pointer-events-none absolute z-10 w-auto whitespace-nowrap rounded-lg bg-black py-2 px-3 text-center font-sans text-xs text-white opacity-0 transition group-hover:opacity-100 ${positionClasses[position].box}`}
+      className={`absolute z-10 w-auto whitespace-nowrap rounded-lg bg-black py-2 px-3 text-center font-sans text-xs text-white opacity-0 transition group-hover:opacity-100 ${
+        positionClasses[position].box
+      } ${interactive ? "pointer-events-auto" : "pointer-events-none"}`}
     >
       {children}
       <svg

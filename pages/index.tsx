@@ -1,12 +1,10 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import ProjectModal from "../components/ProjectModal/ProjectModal";
-import HeaderLogo from "../components/shared/HeaderLogo";
 import {
   CameraIcon,
   PlusIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/solid";
-import { SocialIcon } from "react-social-icons";
 import {
   AdjustmentsHorizontalIcon,
   QueueListIcon,
@@ -14,13 +12,11 @@ import {
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import {
-  backgroundColors,
   ColorCombo,
   colorCombos,
   testBio,
   testName,
   testSocials,
-  textColors,
 } from "../constants/testData";
 import TextareaAutosize from "react-textarea-autosize";
 import {
@@ -30,12 +26,10 @@ import {
 import EditorHeader from "../components/shared/EditorHeader";
 import { Social } from "../constants/editor/types";
 import Tooltip from "../components/shared/Tooltip";
-import ColorPicker from "../components/ProjectModal/ColorPicker";
 import SocialLink from "../components/Editor/SocialLink";
-import { motion as m } from "framer-motion";
-import AnimateHeight from "react-animate-height";
 import ColorComboSelector from "../components/ProjectModal/ColorComboSelector";
 import { handleFileUpload } from "../utils/images/imageUtils";
+import Avatar from "../components/Editor/Avatar";
 
 interface FontStyle {
   [key: string]: {
@@ -68,7 +62,7 @@ const fontClassMap: FontStyle = {
   },
 };
 
-const Divider = () => <div className="h-full w-px bg-indigo-50/10" />;
+const Divider = () => <div className="h-full w-[2px] bg-indigo-50/20" />;
 
 export default function Home() {
   const editorStyle = useEditorStylesStore((state) => state.editorStyle);
@@ -101,6 +95,8 @@ export default function Home() {
 
   const [colorCombo, setColorCombo] = useState<ColorCombo>(colorCombos[0]);
   const [invertColors, setInvertColors] = useState<boolean>(false);
+
+  const [avatarShape, setAvatarShape] = useState<"circle" | "square">("circle");
 
   useEffect(() => {
     if (invertColors) {
@@ -177,11 +173,12 @@ export default function Home() {
             })}
           </div>
           <Divider />
-          <p
-            className={`flex cursor-pointer items-center rounded-md px-3 py-2 font-mono text-white transition hover:bg-dark-700`}
+          <button
+            className={`group relative flex aspect-square cursor-pointer items-center justify-center rounded-md px-3 py-2 font-mono text-white transition hover:bg-dark-700`}
           >
+            <Tooltip position="bottom">Advanced Settings</Tooltip>
             <AdjustmentsHorizontalIcon className="h-4 w-4" />
-          </p>
+          </button>
         </div>
       </div>
       {/* Project Modal */}
@@ -231,37 +228,15 @@ export default function Home() {
               src={bannerImage}
               className={`absolute h-full w-full rounded-t-md object-cover`}
             />
+
             <div className="relative mx-auto h-52 w-full max-w-4xl">
-              <div
-                className={`absolute -bottom-20 left-1/2 z-20 h-36 w-36 -translate-x-1/2 rounded-full border-4 bg-slate-600 md:left-20 md:translate-x-0 ${
-                  editorStyle === "grotesque"
-                    ? "border-dark-800"
-                    : "border-white"
-                }`}
-              >
-                {/* Change Avatar Image */}
-                <div className="group group absolute inset-0 z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-full transition hover:bg-black/30">
-                  <label
-                    htmlFor={"avatar-image-upload"}
-                    className="flex h-full w-full cursor-pointer items-center justify-center"
-                  >
-                    <CameraIcon className="h-5 w-5 text-white opacity-0 transition group-hover:opacity-100" />
-                    <input
-                      type="file"
-                      id={"avatar-image-upload"}
-                      className="hidden"
-                      accept="image/*"
-                      onChange={(e) => {
-                        handleFileUpload({
-                          e,
-                          setImage: setAvatarImage,
-                        });
-                      }}
-                    />
-                  </label>
-                </div>
-                <img src={avatarImage} className="h-full w-full rounded-full" />
-              </div>
+              <Avatar
+                avatarShape={avatarShape}
+                setAvatarShape={setAvatarShape}
+                avatarImage={avatarImage}
+                setAvatarImage={setAvatarImage}
+                editorStyle={editorStyle}
+              />
             </div>
           </div>
           <div className="mx-auto mb-8 w-full max-w-4xl px-8 pt-24 pb-8 sm:px-10 md:px-20">
@@ -308,7 +283,7 @@ export default function Home() {
               <h1 className="text-2xl font-semibold">Projects</h1>
               <button
                 onClick={() => setProjectModalOpen(true)}
-                className="flex items-center space-x-2 rounded-md bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 font-sans text-sm text-white"
+                className="flex items-center space-x-2 rounded-md border-2 border-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 font-sans text-sm text-white shadow-md shadow-indigo-800/20 transition hover:shadow-lg hover:shadow-indigo-800/20"
               >
                 <p>Add Project</p>
                 <PlusIcon className="h-4 w-4 text-white" />
