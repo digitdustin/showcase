@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import ProjectModal from "../components/ProjectModal/ProjectModal";
 import HeaderLogo from "../components/shared/HeaderLogo";
 import {
@@ -11,9 +11,12 @@ import {
   AdjustmentsHorizontalIcon,
   QueueListIcon,
   Squares2X2Icon,
+  ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import {
   backgroundColors,
+  ColorCombo,
+  colorCombos,
   testBio,
   testName,
   testSocials,
@@ -29,6 +32,10 @@ import { Social } from "../constants/editor/types";
 import Tooltip from "../components/shared/Tooltip";
 import ColorPicker from "../components/ProjectModal/ColorPicker";
 import SocialLink from "../components/Editor/SocialLink";
+import { motion as m } from "framer-motion";
+import AnimateHeight from "react-animate-height";
+import ColorComboSelector from "../components/ProjectModal/ColorComboSelector";
+import { handleFileUpload } from "../utils/images/imageUtils";
 
 interface FontStyle {
   [key: string]: {
@@ -92,6 +99,19 @@ export default function Home() {
 
   const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
 
+  const [colorCombo, setColorCombo] = useState<ColorCombo>(colorCombos[0]);
+  const [invertColors, setInvertColors] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (invertColors) {
+      setTextColor(colorCombo.color1.color);
+      setBackgroundColor(colorCombo.color2.color);
+    } else {
+      setTextColor(colorCombo.color2.color);
+      setBackgroundColor(colorCombo.color1.color);
+    }
+  }, [invertColors, colorCombo]);
+
   return (
     <div className="flex h-screen min-h-screen w-full flex-col bg-slate-50">
       {/* Logo Header */}
@@ -102,32 +122,6 @@ export default function Home() {
         <div></div>
         {/* Font Select */}
         <div className="flex h-full space-x-2">
-          <div className="flex items-center space-x-2 text-white">
-            <div className="editor-color-picker group relative">
-              <ColorPicker
-                position="left"
-                color={textColor}
-                setColor={setTextColor}
-                colors={textColors}
-              />
-              <Tooltip position="top">Text Color</Tooltip>
-              <p className="center-vertical center-horizontal pointer-events-none absolute font-grotesque text-sm underline mix-blend-difference">
-                A
-              </p>
-            </div>
-            <div className="editor-color-picker group relative">
-              <ColorPicker
-                position="left"
-                color={backgroundColor}
-                setColor={setBackgroundColor}
-                colors={backgroundColors}
-              />
-              <Tooltip position="top">Background Color</Tooltip>
-
-              <div className="center-vertical center-horizontal pointer-events-none absolute h-3 w-3 rounded-sm border-2 border-dotted border-white mix-blend-difference" />
-            </div>
-          </div>
-          <Divider />
           <div className="flex items-center space-x-2 text-white">
             <button
               onClick={() => setExtendSocials(!extendSocials)}
@@ -145,6 +139,26 @@ export default function Home() {
               )}
             </button>
           </div>
+          <Divider />
+          <div className="flex items-center space-x-2 text-white">
+            <ColorComboSelector
+              invert={invertColors}
+              selectedCombo={colorCombo}
+              setSelectedCombo={setColorCombo}
+            />
+            <button
+              onClick={() => setInvertColors(!invertColors)}
+              className={`group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition ease-in-out hover:bg-dark-700`}
+            >
+              <Tooltip position="bottom">Invert Colors</Tooltip>
+              <ArrowPathIcon
+                className={`h-5 w-5 transition ${
+                  invertColors ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
+
           <Divider />
           <div className="flex items-center space-x-2 text-white">
             {Object.values(fontClassMap).map((font) => {
@@ -188,13 +202,30 @@ export default function Home() {
         >
           <div className="relative h-52 w-full rounded-t-md">
             {/* Change Banner Image */}
-            <div className="group absolute inset-0 z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-t-md transition hover:bg-black/30">
-              <div className="flex items-center space-x-2 opacity-0 transition group-hover:opacity-100">
-                <CameraIcon className="h-5 w-5 text-white" />
-                <span className="font-sans text-sm font-semibold text-white">
-                  Change Banner Image
-                </span>
-              </div>
+            <div className="group absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-t-md transition hover:bg-black/30">
+              <label
+                htmlFor={"banner-image-upload"}
+                className="flex h-full w-full cursor-pointer items-center justify-center"
+              >
+                <div className="opacity-0 transition group-hover:opacity-100">
+                  <CameraIcon className="mx-auto h-5 w-5 text-white" />
+                  <span className="font-sans text-sm font-semibold text-white">
+                    Change Banner Image
+                  </span>
+                </div>
+                <input
+                  type="file"
+                  id={"banner-image-upload"}
+                  className="hidden"
+                  accept="image/*"
+                  onChange={(e) => {
+                    handleFileUpload({
+                      e,
+                      setImage: setBannerImage,
+                    });
+                  }}
+                />
+              </label>
             </div>
             <img
               src={bannerImage}
@@ -202,19 +233,32 @@ export default function Home() {
             />
             <div className="relative mx-auto h-52 w-full max-w-4xl">
               <div
-                style={{
-                  borderColor:
-                    editorStyle === "grotesque" ? textColor : "white",
-                }}
                 className={`absolute -bottom-20 left-1/2 z-20 h-36 w-36 -translate-x-1/2 rounded-full border-4 bg-slate-600 md:left-20 md:translate-x-0 ${
                   editorStyle === "grotesque"
-                    ? "border-dark-700"
+                    ? "border-dark-800"
                     : "border-white"
                 }`}
               >
                 {/* Change Avatar Image */}
                 <div className="group group absolute inset-0 z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-full transition hover:bg-black/30">
-                  <CameraIcon className="h-5 w-5 text-white opacity-0 transition group-hover:opacity-100" />
+                  <label
+                    htmlFor={"avatar-image-upload"}
+                    className="flex h-full w-full cursor-pointer items-center justify-center"
+                  >
+                    <CameraIcon className="h-5 w-5 text-white opacity-0 transition group-hover:opacity-100" />
+                    <input
+                      type="file"
+                      id={"avatar-image-upload"}
+                      className="hidden"
+                      accept="image/*"
+                      onChange={(e) => {
+                        handleFileUpload({
+                          e,
+                          setImage: setAvatarImage,
+                        });
+                      }}
+                    />
+                  </label>
                 </div>
                 <img src={avatarImage} className="h-full w-full rounded-full" />
               </div>
@@ -270,9 +314,14 @@ export default function Home() {
                 <PlusIcon className="h-4 w-4 text-white" />
               </button>
             </div>
-            <div className="flex w-full flex-col items-center justify-center space-y-2 rounded-md bg-white/20 p-4 py-8 transition">
-              <PlusCircleIcon className="h-8 w-8 text-slate-400" />
-              <p className="ml-2 text-center font-sans text-slate-500">
+            <div
+              style={{
+                color: textColor,
+              }}
+              className="flex w-full flex-col items-center justify-center space-y-2 rounded-md p-4 py-8 opacity-80 transition"
+            >
+              <PlusCircleIcon className="h-8 w-8" />
+              <p className="ml-2 text-center font-sans">
                 You currently have no projects... Click add to create one!
               </p>
             </div>

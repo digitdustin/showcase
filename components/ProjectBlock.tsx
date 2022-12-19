@@ -1,5 +1,6 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
 import React, { useEffect } from "react";
+import { handleFileUpload } from "../utils/images/imageUtils";
 import { ProjectType } from "./ProjectModal/ProjectModal";
 
 const ChangeImageOverlay = ({
@@ -37,16 +38,10 @@ const ChangeImageOverlay = ({
           className="hidden"
           accept="image/*"
           onChange={(e) => {
-            if (e.target.files) {
-              const file = e.target.files[0];
-              const reader = new FileReader();
-              reader.readAsDataURL(file);
-              reader.onload = () => {
-                if (typeof reader.result === "string") {
-                  setImage(reader.result);
-                }
-              };
-            }
+            handleFileUpload({
+              e,
+              setImage,
+            });
           }}
         />
       </label>

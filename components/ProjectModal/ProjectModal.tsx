@@ -14,6 +14,7 @@ import { motion as m } from "framer-motion";
 import { AnimateHeight } from "../shared/AnimateHeight";
 import { useEffect } from "react";
 import { Palette } from "react-palette";
+import { heightAnim } from "../../constants/variants";
 
 const projectTypes = ["web", "app", "mobile"];
 
@@ -64,14 +65,6 @@ const ProjectModal = ({
 
   const siteShot = useSiteShot(projectLink);
 
-  const variants = {
-    open: {
-      opacity: 1,
-      height: "auto",
-    },
-    collapsed: { opacity: 0, height: 0 },
-  };
-
   useEffect(() => {
     if (siteShot.status === "loaded") {
       setShowEditControls(true);
@@ -102,7 +95,7 @@ const ProjectModal = ({
           )}
         </Dialog.Title>
         <AnimateHeight
-          variants={variants}
+          variants={heightAnim}
           isVisible={showEditControls === true}
         >
           <ModalSection>
@@ -162,7 +155,7 @@ const ProjectModal = ({
           </ModalSection>
         </AnimateHeight>
         <AnimateHeight
-          variants={variants}
+          variants={heightAnim}
           isVisible={showEditControls === false}
         >
           <ModalSection>
