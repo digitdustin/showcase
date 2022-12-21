@@ -9,6 +9,8 @@ interface EditorStyleStore {
   setBackgroundColor: (backgroundColor: string) => void;
   textColor: string;
   setTextColor: (textColor: string) => void;
+  extendedSocials: boolean;
+  setExtendedSocials: (extendedSocials: boolean) => void;
 }
 
 export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
@@ -18,4 +20,6 @@ export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
   setBackgroundColor: (backgroundColor: string) => set({ backgroundColor }),
   textColor: "#000000",
   setTextColor: (textColor: string) => set({ textColor }),
+  extendedSocials: false,
+  setExtendedSocials: (extendedSocials: boolean) => set({ extendedSocials }),
 }));
