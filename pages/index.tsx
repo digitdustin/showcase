@@ -1,10 +1,6 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import ProjectModal from "../components/ProjectModal/ProjectModal";
-import {
-  CameraIcon,
-  PlusIcon,
-  PlusCircleIcon,
-} from "@heroicons/react/24/solid";
+import { CameraIcon, PlusIcon } from "@heroicons/react/24/solid";
 import {
   AdjustmentsHorizontalIcon,
   QueueListIcon,
@@ -30,8 +26,10 @@ import SocialLink from "../components/Editor/SocialLink";
 import ColorComboSelector from "../components/ProjectModal/ColorComboSelector";
 import { handleFileUpload } from "../utils/images/imageUtils";
 import Avatar from "../components/Editor/Avatar";
-import SidePanel from "../components/shared/SidePanel";
 import AdvancedSettings from "../components/Editor/AdvancedSettings";
+import SocialsModal from "../components/Editor/SocialsModal/SocialsModal";
+import { motion as m } from "framer-motion";
+import { usePageContentStore } from "../stores/usePageContentStore";
 
 interface FontStyle {
   [key: string]: {
@@ -84,21 +82,26 @@ export default function Home() {
     setHeaderCentered,
   } = useEditorStylesStore((state) => state);
 
+  const {
+    name,
+    setName,
+    bio,
+    setBio,
+    socials,
+    setSocials,
+    bannerImage,
+    setBannerImage,
+    avatarImage,
+    setAvatarImage,
+  } = usePageContentStore((state) => state);
+
   const [projects, setProjects] = useState([]);
-  const [name, setName] = useState<string>(testName);
-  const [bio, setBio] = useState<string>(testBio);
-  const [bannerImage, setBannerImage] = useState<string>(
-    "https://media.istockphoto.com/id/1411253803/photo/universal-linkedin-banner-with-pink-sunset-over-the-alps-for-any-profession.jpg?b=1&s=170667a&w=0&k=20&c=V3-D3Hc47eMkqbyPDOvQRqcsCrwZPTckg_1OdDWYoS8="
-  );
-  const [avatarImage, setAvatarImage] = useState<string>(
-    "https://github.com/digitdustin.png"
-  );
-  const [socials, setSocials] = useState<Social[]>(testSocials);
 
   const [editingName, setEditingName] = useState<boolean>(false);
   const [editingBio, setEditingBio] = useState<boolean>(false);
 
   const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
+  const [socialModalOpen, setSocialModalOpen] = useState<boolean>(false);
 
   const [colorCombo, setColorCombo] = useState<ColorCombo>(colorCombos[0]);
   const [invertColors, setInvertColors] = useState<boolean>(false);
@@ -107,6 +110,14 @@ export default function Home() {
     useState<boolean>(false);
 
   const [avatarShape, setAvatarShape] = useState<"circle" | "square">("circle");
+
+  const addSocialLink = (network: string, url: string) => {
+    const newSocial = {
+      network,
+      url,
+    };
+    setSocials([...socials, newSocial]);
+  };
 
   return (
     <div className="relative flex h-screen min-h-screen w-full flex-col bg-slate-50">
@@ -117,6 +128,11 @@ export default function Home() {
       <ProjectModal
         isOpen={projectModalOpen}
         onClose={() => setProjectModalOpen(false)}
+      />
+      <SocialsModal
+        isOpen={socialModalOpen}
+        onClose={() => setSocialModalOpen(false)}
+        addSocialLink={addSocialLink}
       />
       <div className={`flex h-full w-full overflow-hidden`}>
         <div
@@ -292,6 +308,13 @@ export default function Home() {
                       editorStyle={editorStyle}
                     />
                   ))}
+                  <m.div layout="position" className="group relative">
+                    <Tooltip position="bottom">Add Social Link</Tooltip>
+                    <PlusIcon
+                      onClick={() => setSocialModalOpen(true)}
+                      className="h-10 w-10 cursor-pointer rounded-full border-2 border-white bg-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 p-1 text-white shadow-md transition hover:shadow-lg"
+                    />
+                  </m.div>
                 </div>
               </div>
               <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 px-8 sm:px-10 md:px-20">
@@ -311,10 +334,13 @@ export default function Home() {
                   }}
                   className="flex w-full flex-col items-center justify-center space-y-2 rounded-md p-4 py-8 opacity-80 transition"
                 >
-                  <PlusCircleIcon
-                    onClick={() => setProjectModalOpen(true)}
-                    className="h-8 w-8 cursor-pointer rounded-full bg-white shadow-md"
-                  />
+                  <button className="group relative">
+                    <Tooltip position="top">Add Project</Tooltip>
+                    <PlusIcon
+                      onClick={() => setProjectModalOpen(true)}
+                      className="h-8 w-8 cursor-pointer rounded-full border-2 border-white bg-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 p-1 text-white shadow-md transition hover:shadow-lg"
+                    />
+                  </button>
                   <p className="ml-2 text-center font-sans">
                     You currently have no projects... Click add to create one!
                   </p>
@@ -326,6 +352,7 @@ export default function Home() {
         <AdvancedSettings
           open={advancedSettingsOpen}
           setOpen={setAdvancedSettingsOpen}
+          setSocialModalOpen={setSocialModalOpen}
         />
       </div>
     </div>

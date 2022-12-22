@@ -1,4 +1,4 @@
-import { Social } from "./editor/types";
+import { AvailableSocial, Social } from "./editor/types";
 
 export const testName = "Dustin Karp";
 
@@ -25,6 +25,89 @@ export const testSocials: Social[] = [
   {
     network: "email",
     url: "mailto:dustinkarp52@gmail.com",
+  },
+];
+
+export const availableSocials: AvailableSocial[] = [
+  {
+    network: "github",
+    placeholder: "github.com/username",
+  },
+  {
+    network: "linkedin",
+    placeholder: "linkedin.com/in/username",
+  },
+  {
+    network: "twitter",
+    placeholder: "twitter.com/username",
+  },
+  {
+    network: "youtube",
+    placeholder: "youtube.com/channel/username",
+  },
+  {
+    network: "email",
+    placeholder: "user@email.com",
+  },
+  {
+    network: "instagram",
+    placeholder: "instagram.com/username",
+  },
+  {
+    network: "facebook",
+    placeholder: "facebook.com/username",
+  },
+  {
+    network: "twitch",
+    placeholder: "twitch.tv/username",
+  },
+  {
+    network: "pinterest",
+    placeholder: "pinterest.com/username",
+  },
+  {
+    network: "tiktok",
+    placeholder: "tiktok.com/@username",
+  },
+  {
+    network: "spotify",
+    placeholder: "spotify.com/user/username",
+  },
+  {
+    network: "soundcloud",
+    placeholder: "soundcloud.com/username",
+  },
+  {
+    network: "medium",
+    placeholder: "medium.com/@username",
+  },
+  {
+    network: "dribbble",
+    placeholder: "dribbble.com/username",
+  },
+  {
+    network: "behance",
+    placeholder: "behance.net/username",
+  },
+  {
+    network: "stackoverflow",
+    placeholder: "stackoverflow.com/users/username",
+  },
+  {
+    network: "reddit",
+    placeholder: "reddit.com/user/username",
+  },
+  {
+    network: "discord",
+    placeholder: "discord.com/username",
+  },
+  {
+    network: "snapchat",
+    placeholder: "snapchat.com/add/username",
+  },
+  {
+    network: "tumblr",
+    placeholder: "username.tumblr.com",
   },
 ];
 

@@ -16,7 +16,7 @@ const Avatar = ({
   avatarShape: "circle" | "square";
   setAvatarShape: React.Dispatch<React.SetStateAction<"circle" | "square">>;
   avatarImage: string;
-  setAvatarImage: React.Dispatch<React.SetStateAction<string>>;
+  setAvatarImage: (avatarImage: string) => void;
   editorStyle: EditorStyle;
 }) => {
   const { headerCentered, backgroundColor } = useEditorStylesStore(
@@ -85,7 +85,7 @@ const Avatar = ({
         </div>
         <img
           src={avatarImage}
-          className={`h-full w-full ${
+          className={`aspect-square h-full w-full ${
             avatarShape === "circle" ? "rounded-full" : "rounded-md"
           }`}
         />
