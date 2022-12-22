@@ -311,7 +311,10 @@ export default function Home() {
                   }}
                   className="flex w-full flex-col items-center justify-center space-y-2 rounded-md p-4 py-8 opacity-80 transition"
                 >
-                  <PlusCircleIcon className="h-8 w-8" />
+                  <PlusCircleIcon
+                    onClick={() => setProjectModalOpen(true)}
+                    className="h-8 w-8 cursor-pointer rounded-full bg-white shadow-md"
+                  />
                   <p className="ml-2 text-center font-sans">
                     You currently have no projects... Click add to create one!
                   </p>
