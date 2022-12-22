@@ -6,4 +6,5 @@ export interface Social {
 export interface AvailableSocial {
   network: string;
   placeholder: string;
+  color: string;
 }

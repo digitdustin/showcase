@@ -7,6 +7,8 @@ import IconInput from "../../ProjectModal/IconInput";
 import { availableSocials } from "../../../constants/testData";
 import { SocialIcon } from "react-social-icons";
 import Tooltip from "../../shared/Tooltip";
+import { usePageContentStore } from "../../../stores/usePageContentStore";
+import { notify } from "../../../utils/toast/toastUtils";
 
 const projectTypes = ["web", "app", "mobile"];
 
@@ -23,15 +25,36 @@ const ModalSection = ({ children }: { children: React.ReactNode }) => (
 const SocialsModal = ({
   isOpen,
   onClose,
-  addSocialLink,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  addSocialLink: (network: string, url: string) => void;
 }) => {
   const [network, setNetwork] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [placeholder, setPlaceholder] = useState<string>("");
+
+  const { socials, setSocials } = usePageContentStore((state) => state);
+
+  const addSocialLink = (network: string, url: string) => {
+    //check if social already exists
+    const existingSocial = socials.find((social) => social.network === network);
+    if (existingSocial) {
+      notify("error", "Social already exists");
+      return;
+    }
+    //check if url is valid
+    if (url.length === 0) {
+      notify("error", "Please enter a valid url");
+      return;
+    }
+    const newSocial = {
+      network,
+      url,
+    };
+    setSocials([...socials, newSocial]);
+    notify("success", "Social added");
+    onClose();
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -92,7 +115,6 @@ const SocialsModal = ({
           <button
             onClick={() => {
               addSocialLink(network, url);
-              onClose();
             }}
             className="group min-h-[44px] w-full rounded-md bg-gradient-to-r from-indigo-400 to-fuchsia-400 py-3 text-center transition"
           >

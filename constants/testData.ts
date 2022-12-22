@@ -32,82 +32,102 @@ export const availableSocials: AvailableSocial[] = [
   {
     network: "github",
     placeholder: "github.com/username",
+    color: "#24292e",
   },
   {
     network: "linkedin",
     placeholder: "linkedin.com/in/username",
+    color: "#007fb1",
   },
   {
     network: "twitter",
     placeholder: "twitter.com/username",
+    color: "#00aced",
   },
   {
     network: "youtube",
     placeholder: "youtube.com/channel/username",
+    color: "#ff3333",
   },
   {
     network: "email",
     placeholder: "user@email.com",
+    color: "#7F7F7F",
   },
   {
     network: "instagram",
     placeholder: "instagram.com/username",
+    color: "#e94475",
   },
   {
     network: "facebook",
     placeholder: "facebook.com/username",
+    color: "#3b5998",
   },
   {
     network: "twitch",
     placeholder: "twitch.tv/username",
+    color: "#6441A5",
   },
   {
     network: "pinterest",
     placeholder: "pinterest.com/username",
+    color: "#cb2128",
   },
   {
     network: "tiktok",
     placeholder: "tiktok.com/@username",
+    color: "#000000",
   },
   {
     network: "spotify",
     placeholder: "spotify.com/user/username",
+    color: "#2EBD59",
   },
   {
     network: "soundcloud",
     placeholder: "soundcloud.com/username",
+    color: "#FF5700",
   },
   {
     network: "medium",
     placeholder: "medium.com/@username",
+    color: "#333332",
   },
   {
     network: "dribbble",
     placeholder: "dribbble.com/username",
+    color: "#ea4c89",
   },
   {
     network: "behance",
     placeholder: "behance.net/username",
+    color: "#007CFF",
   },
   {
     network: "stackoverflow",
     placeholder: "stackoverflow.com/users/username",
+    color: "#ed803d",
   },
   {
     network: "reddit",
     placeholder: "reddit.com/user/username",
+    color: "#FF4500",
   },
   {
     network: "discord",
     placeholder: "discord.com/username",
+    color: "#7289DA",
   },
   {
     network: "snapchat",
     placeholder: "snapchat.com/add/username",
+    color: "#FFC91B",
   },
   {
     network: "tumblr",
     placeholder: "username.tumblr.com",
+    color: "#2c4762",
   },
 ];
 

@@ -161,7 +161,18 @@ const AdvancedSettings = ({
               </button>
             </div>
           ) : (
-            <p className="text-sm text-dark-100">No Socials Added</p>
+            <div className="flex w-full flex-col">
+              <p className="py-2 text-center text-sm text-dark-100">
+                No Socials Added
+              </p>
+              <button
+                onClick={() => setSocialModalOpen(true)}
+                className="flex w-full items-center justify-center pt-2 text-sm text-indigo-500 hover:text-indigo-400"
+              >
+                <PlusIcon className="mr-2 h-4 w-4" />
+                Add Social
+              </button>
+            </div>
           )}
         </div>
         <div className="flex items-center justify-between py-2">

@@ -30,6 +30,8 @@ import AdvancedSettings from "../components/Editor/AdvancedSettings";
 import SocialsModal from "../components/Editor/SocialsModal/SocialsModal";
 import { motion as m } from "framer-motion";
 import { usePageContentStore } from "../stores/usePageContentStore";
+import { Toaster } from "react-hot-toast";
+import { notify } from "../utils/toast/toastUtils";
 
 interface FontStyle {
   [key: string]: {
@@ -111,16 +113,9 @@ export default function Home() {
 
   const [avatarShape, setAvatarShape] = useState<"circle" | "square">("circle");
 
-  const addSocialLink = (network: string, url: string) => {
-    const newSocial = {
-      network,
-      url,
-    };
-    setSocials([...socials, newSocial]);
-  };
-
   return (
     <div className="relative flex h-screen min-h-screen w-full flex-col bg-slate-50">
+      <Toaster />
       {/* Logo Header */}
       <EditorHeader />
 
@@ -132,7 +127,6 @@ export default function Home() {
       <SocialsModal
         isOpen={socialModalOpen}
         onClose={() => setSocialModalOpen(false)}
-        addSocialLink={addSocialLink}
       />
       <div className={`flex h-full w-full overflow-hidden`}>
         <div
