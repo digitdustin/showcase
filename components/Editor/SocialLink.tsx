@@ -10,6 +10,7 @@ const SocialLink = ({
   extend,
   monochromatic,
   monochromaticColor,
+  roundedSocials,
 }: {
   network: string;
   url: string;
@@ -17,6 +18,7 @@ const SocialLink = ({
   extend: boolean;
   monochromatic: boolean;
   monochromaticColor: string;
+  roundedSocials: boolean;
 }) => {
   //find element in availableSocials with network name, then get color of that entry
 
@@ -35,7 +37,9 @@ const SocialLink = ({
         className={`relative z-20 flex cursor-pointer items-center transition ${
           extend
             ? "w-full justify-start space-x-2 rounded-md py-2 px-4"
-            : "w-auto justify-center rounded-full"
+            : `w-auto justify-center ${
+                roundedSocials ? "rounded-full" : "rounded-md"
+              }`
         } ${
           editorStyle === "grotesque"
             ? "-translate-y-[3px] -translate-x-[3px] border-2 border-dark-800 hover:translate-y-0 hover:translate-x-0"
@@ -54,7 +58,9 @@ const SocialLink = ({
       {editorStyle === "grotesque" && (
         <div
           className={`absolute inset-0 z-0 h-full w-full border-[6px] border-dark-800 ${
-            extend ? "rounded-lg" : "rounded-full"
+            extend
+              ? "rounded-lg"
+              : `${roundedSocials ? "rounded-full" : "rounded-md"}`
           }`}
         />
       )}

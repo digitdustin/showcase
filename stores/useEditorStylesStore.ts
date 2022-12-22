@@ -17,6 +17,8 @@ interface EditorStyleStore {
   setMonochromaticSocials: (monochromaticSocials: boolean) => void;
   socialsColor: string;
   setSocialsColor: (socialsColor: string) => void;
+  roundedSocials: boolean;
+  setRoundedSocials: (roundedSocials: boolean) => void;
 }
 
 export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
@@ -24,7 +26,7 @@ export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
   setEditorStyle: (editorStyle: EditorStyle) => set({ editorStyle }),
   backgroundColor: "#ffffff",
   setBackgroundColor: (backgroundColor: string) => set({ backgroundColor }),
-  textColor: "#000000",
+  textColor: "#2d2d2d",
   setTextColor: (textColor: string) => set({ textColor }),
   extendedSocials: false,
   setExtendedSocials: (extendedSocials: boolean) => set({ extendedSocials }),
@@ -33,6 +35,8 @@ export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
   monochromaticSocials: false,
   setMonochromaticSocials: (monochromaticSocials: boolean) =>
     set({ monochromaticSocials }),
-  socialsColor: "#000000",
+  socialsColor: "#2d2d2d",
   setSocialsColor: (socialsColor: string) => set({ socialsColor }),
+  roundedSocials: true,
+  setRoundedSocials: (roundedSocials: boolean) => set({ roundedSocials }),
 }));

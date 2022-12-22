@@ -81,6 +81,8 @@ const AdvancedSettings = ({
     setMonochromaticSocials,
     socialsColor,
     setSocialsColor,
+    roundedSocials,
+    setRoundedSocials,
   } = useEditorStylesStore((state) => state);
 
   const { socials, setSocials } = usePageContentStore((state) => state);
@@ -175,9 +177,20 @@ const AdvancedSettings = ({
             </div>
           )}
         </div>
-        <div className="flex items-center justify-between py-2">
-          <p className="text-sm text-dark-100">Full Width Social Links?</p>
-          <Toggle enabled={extendedSocials} setEnabled={setExtendedSocials} />
+        <div className="flex flex-col py-2">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-dark-100">Full Width Social Links?</p>
+            <Toggle enabled={extendedSocials} setEnabled={setExtendedSocials} />
+          </div>
+          <AnimateHeight
+            variants={heightAnim}
+            isVisible={extendedSocials === false}
+          >
+            <div className="mt-6 flex items-center justify-between">
+              <p className="text-sm text-dark-100">Rounded Socials</p>
+              <Toggle enabled={roundedSocials} setEnabled={setRoundedSocials} />
+            </div>
+          </AnimateHeight>
         </div>
         <div className="flex flex-col py-2">
           <div className="flex items-center justify-between">
@@ -193,12 +206,14 @@ const AdvancedSettings = ({
           >
             <div className="mt-6 flex items-center justify-between">
               <p className="text-sm text-dark-100">Social Color</p>
-              <ColorPicker
-                color={socialsColor}
-                setColor={setSocialsColor}
-                position="right"
-                size="24px"
-              />
+              <div className="rounded-[7px] border border-dark-500">
+                <ColorPicker
+                  color={socialsColor}
+                  setColor={setSocialsColor}
+                  position="right"
+                  size="24px"
+                />
+              </div>
             </div>
           </AnimateHeight>
         </div>

@@ -82,6 +82,7 @@ export default function Home() {
     setSocialsColor,
     headerCentered,
     setHeaderCentered,
+    roundedSocials,
   } = useEditorStylesStore((state) => state);
 
   const {
@@ -300,14 +301,27 @@ export default function Home() {
                       monochromatic={monochromaticSocials}
                       monochromaticColor={socialsColor}
                       editorStyle={editorStyle}
+                      roundedSocials={roundedSocials}
                     />
                   ))}
                   <m.div layout="position" className="group relative">
-                    <Tooltip position="bottom">Add Social Link</Tooltip>
-                    <PlusIcon
-                      onClick={() => setSocialModalOpen(true)}
-                      className="h-10 w-10 cursor-pointer rounded-full border-2 border-white bg-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 p-1 text-white shadow-md transition hover:shadow-lg"
-                    />
+                    {extendedSocials ? (
+                      <button
+                        onClick={() => setSocialModalOpen(true)}
+                        className="flex w-full items-center justify-center space-x-2 rounded-md border-2 border-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 font-sans text-sm text-white shadow-md shadow-indigo-800/20 transition hover:shadow-lg hover:shadow-indigo-800/20"
+                      >
+                        <p>Add Social Link</p>
+                        <PlusIcon className="h-4 w-4 text-white" />
+                      </button>
+                    ) : (
+                      <>
+                        <Tooltip position="bottom">Add Social Link</Tooltip>
+                        <PlusIcon
+                          onClick={() => setSocialModalOpen(true)}
+                          className={`h-10 w-10 cursor-pointer rounded-full border-2 border-white bg-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 p-1 text-white shadow-md transition hover:shadow-lg`}
+                        />
+                      </>
+                    )}
                   </m.div>
                 </div>
               </div>

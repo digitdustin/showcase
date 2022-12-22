@@ -27,7 +27,7 @@ const Avatar = ({
       style={{
         borderColor: backgroundColor,
       }}
-      className={`absolute -bottom-20 z-20 h-36 w-36 border-4 bg-slate-600 transition-all ${
+      className={`absolute -bottom-20 z-20 h-36 w-36 border-4 bg-slate-600 ${
         avatarShape === "circle" ? "rounded-full" : "rounded-lg"
       } ${
         headerCentered
