@@ -3,6 +3,8 @@ import { useEditorStylesStore } from "../../stores/useEditorStylesStore";
 import ColorPicker from "../ProjectModal/ColorPicker";
 import SidePanel from "../shared/SidePanel";
 import { Switch } from "@headlessui/react";
+import { AnimateHeight } from "../shared/AnimateHeight";
+import { heightAnim } from "../../constants/variants";
 
 export const Toggle = ({
   enabled,
@@ -15,7 +17,7 @@ export const Toggle = ({
     <Switch
       checked={enabled}
       onChange={setEnabled}
-      className={`${enabled ? "bg-indigo-800" : "bg-indigo-500"}
+      className={`${enabled ? "bg-indigo-500" : "bg-indigo-800"}
           relative inline-flex h-6 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
     >
       <span className="sr-only">Use setting</span>
@@ -60,20 +62,20 @@ const AdvancedSettings = ({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
-  const textColor = useEditorStylesStore((state) => state.textColor);
-  const setTextColor = useEditorStylesStore((state) => state.setTextColor);
-  const backgroundColor = useEditorStylesStore(
-    (state) => state.backgroundColor
-  );
-  const setBackgroundColor = useEditorStylesStore(
-    (state) => state.setBackgroundColor
-  );
-  const extendedSocials = useEditorStylesStore(
-    (state) => state.extendedSocials
-  );
-  const setExtendedSocials = useEditorStylesStore(
-    (state) => state.setExtendedSocials
-  );
+  const {
+    backgroundColor,
+    setBackgroundColor,
+    textColor,
+    setTextColor,
+    extendedSocials,
+    setExtendedSocials,
+    headerCentered,
+    setHeaderCentered,
+    monochromaticSocials,
+    setMonochromaticSocials,
+    socialsColor,
+    setSocialsColor,
+  } = useEditorStylesStore((state) => state);
 
   return (
     <SidePanel
@@ -81,7 +83,7 @@ const AdvancedSettings = ({
       panelOpen={open}
       setPanelOpen={setOpen}
     >
-      <PanelSection title="Colors">
+      <PanelSection title="Page">
         <div className="flex items-center justify-between py-2">
           <p className="text-sm text-dark-100">Background Color:</p>
           <div className="rounded-[7px] border border-dark-500">
@@ -89,6 +91,7 @@ const AdvancedSettings = ({
               color={backgroundColor}
               setColor={setBackgroundColor}
               position="right"
+              size="24px"
             />
           </div>
         </div>
@@ -99,14 +102,42 @@ const AdvancedSettings = ({
               color={textColor}
               setColor={setTextColor}
               position="right"
+              size="24px"
             />
           </div>
+        </div>
+        <div className="flex items-center justify-between py-2">
+          <p className="text-sm text-dark-100">Center Content?</p>
+          <Toggle enabled={headerCentered} setEnabled={setHeaderCentered} />
         </div>
       </PanelSection>
       <PanelSection title="Socials">
         <div className="flex items-center justify-between py-2">
-          <p className="text-sm text-dark-100">Extend Socials?</p>
+          <p className="text-sm text-dark-100">Full Width Social Links?</p>
           <Toggle enabled={extendedSocials} setEnabled={setExtendedSocials} />
+        </div>
+        <div className="flex flex-col py-2">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-dark-100">Monochromatic Link Colors?</p>
+            <Toggle
+              enabled={monochromaticSocials}
+              setEnabled={setMonochromaticSocials}
+            />
+          </div>
+          <AnimateHeight
+            variants={heightAnim}
+            isVisible={monochromaticSocials === true}
+          >
+            <div className="mt-6 flex items-center justify-between">
+              <p className="text-sm text-dark-100">Social Color</p>
+              <ColorPicker
+                color={socialsColor}
+                setColor={setSocialsColor}
+                position="right"
+                size="24px"
+              />
+            </div>
+          </AnimateHeight>
         </div>
       </PanelSection>
     </SidePanel>

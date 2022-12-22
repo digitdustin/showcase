@@ -15,17 +15,23 @@ const SocialLink = ({
   url,
   editorStyle,
   extend,
+  monochromatic,
+  monochromaticColor,
 }: {
   network: string;
   url: string;
   editorStyle: string;
   extend: boolean;
+  monochromatic: boolean;
+  monochromaticColor: string;
 }) => {
   return (
     <m.div layout="position" className="relative">
       <m.div
         style={{
-          backgroundColor: bgColors[network] || "#000000",
+          backgroundColor: monochromatic
+            ? monochromaticColor
+            : bgColors[network] || "#000000",
         }}
         className={`relative z-20 flex -translate-y-[3px] -translate-x-[3px] cursor-pointer items-center transition hover:translate-y-0 hover:translate-x-0 ${
           extend
@@ -36,6 +42,7 @@ const SocialLink = ({
         <SocialIcon
           network={network}
           url={url}
+          bgColor={monochromatic ? monochromaticColor : ""}
           fgColor="#ffffff"
           className="!h-10 !w-10"
         />

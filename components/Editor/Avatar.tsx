@@ -1,5 +1,8 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
-import { EditorStyle } from "../../stores/useEditorStylesStore";
+import {
+  EditorStyle,
+  useEditorStylesStore,
+} from "../../stores/useEditorStylesStore";
 import { handleFileUpload } from "../../utils/images/imageUtils";
 import Tooltip from "../shared/Tooltip";
 
@@ -16,11 +19,16 @@ const Avatar = ({
   setAvatarImage: React.Dispatch<React.SetStateAction<string>>;
   editorStyle: EditorStyle;
 }) => {
+  const { headerCentered } = useEditorStylesStore((state) => state);
   return (
     <div
-      className={`absolute -bottom-20 left-1/2 z-20 h-36 w-36 -translate-x-1/2 border-4 bg-slate-600 md:left-20 md:translate-x-0 ${
+      className={`absolute -bottom-20 z-20 h-36 w-36  border-4 bg-slate-600 transition-all ${
         editorStyle === "grotesque" ? "border-dark-800" : "border-white"
-      } ${avatarShape === "circle" ? "rounded-full" : "rounded-lg"}`}
+      } ${avatarShape === "circle" ? "rounded-full" : "rounded-lg"} ${
+        headerCentered
+          ? "left-1/2 -translate-x-1/2"
+          : "left-8 translate-x-0 sm:left-10 md:left-20"
+      }`}
     >
       <div className="group relative">
         <div className="absolute bottom-full h-14 w-full"></div>

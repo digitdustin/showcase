@@ -11,6 +11,12 @@ interface EditorStyleStore {
   setTextColor: (textColor: string) => void;
   extendedSocials: boolean;
   setExtendedSocials: (extendedSocials: boolean) => void;
+  headerCentered: boolean;
+  setHeaderCentered: (headerCentered: boolean) => void;
+  monochromaticSocials: boolean;
+  setMonochromaticSocials: (monochromaticSocials: boolean) => void;
+  socialsColor: string;
+  setSocialsColor: (socialsColor: string) => void;
 }
 
 export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
@@ -22,4 +28,11 @@ export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
   setTextColor: (textColor: string) => set({ textColor }),
   extendedSocials: false,
   setExtendedSocials: (extendedSocials: boolean) => set({ extendedSocials }),
+  headerCentered: false,
+  setHeaderCentered: (headerCentered: boolean) => set({ headerCentered }),
+  monochromaticSocials: false,
+  setMonochromaticSocials: (monochromaticSocials: boolean) =>
+    set({ monochromaticSocials }),
+  socialsColor: "#000000",
+  setSocialsColor: (socialsColor: string) => set({ socialsColor }),
 }));

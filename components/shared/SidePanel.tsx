@@ -32,11 +32,11 @@ const SidePanel = ({
     <>
       <div
         ref={panelContent}
-        className={`absolute inset-0 z-[60] transform shadow-xl transition-transform ease-in-out md:left-auto md:w-1/2 md:max-w-sm xl:-right-0 xl:left-auto xl:max-w-sm ${
+        className={`pointer-events-none absolute inset-0 z-[60] transform shadow-xl transition-transform ease-in-out md:left-auto md:w-1/2 md:max-w-sm xl:-right-0 xl:left-auto xl:max-w-sm ${
           panelOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="scrollbar-none relative top-[57px] h-[calc(100vh-57px)] w-full shrink-0 overflow-hidden overflow-y-auto overflow-x-hidden border-dark-700 bg-dark-800 p-4 md:border-l">
+        <div className="scrollbar-none pointer-events-auto relative top-[57px] h-[calc(100vh-57px)] w-full shrink-0 overflow-hidden overflow-y-auto overflow-x-hidden border-dark-700 bg-dark-800 p-4 md:border-l">
           <div className="flex items-center justify-between">
             <h1 className="text-lg font-medium text-white">{title}</h1>
             <button

@@ -4,6 +4,7 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: ["!font-sans", "!font-serif", "!font-mono", "!font-grotesque"],
   theme: {
     extend: {
       transitionProperty: {

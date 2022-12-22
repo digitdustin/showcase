@@ -43,7 +43,7 @@ interface FontStyle {
 
 const fontClassMap: FontStyle = {
   default: {
-    fontClass: "font-sans",
+    fontClass: "!font-sans",
     label: "Default",
     value: "default",
   },
@@ -53,12 +53,12 @@ const fontClassMap: FontStyle = {
     value: "serif",
   },
   mono: {
-    fontClass: "font-mono",
+    fontClass: "!font-mono",
     label: "Mono",
     value: "mono",
   },
   grotesque: {
-    fontClass: "font-grotesque",
+    fontClass: "!font-grotesque",
     label: "Brutalist",
     value: "grotesque",
   },
@@ -67,22 +67,22 @@ const fontClassMap: FontStyle = {
 const Divider = () => <div className="h-full w-[2px] bg-indigo-50/20" />;
 
 export default function Home() {
-  const editorStyle = useEditorStylesStore((state) => state.editorStyle);
-  const setEditorStyle = useEditorStylesStore((state) => state.setEditorStyle);
-  const textColor = useEditorStylesStore((state) => state.textColor);
-  const setTextColor = useEditorStylesStore((state) => state.setTextColor);
-  const backgroundColor = useEditorStylesStore(
-    (state) => state.backgroundColor
-  );
-  const setBackgroundColor = useEditorStylesStore(
-    (state) => state.setBackgroundColor
-  );
-  const extendedSocials = useEditorStylesStore(
-    (state) => state.extendedSocials
-  );
-  const setExtendedSocials = useEditorStylesStore(
-    (state) => state.setExtendedSocials
-  );
+  const {
+    editorStyle,
+    setEditorStyle,
+    backgroundColor,
+    setBackgroundColor,
+    textColor,
+    setTextColor,
+    extendedSocials,
+    setExtendedSocials,
+    monochromaticSocials,
+    setMonochromaticSocials,
+    socialsColor,
+    setSocialsColor,
+    headerCentered,
+    setHeaderCentered,
+  } = useEditorStylesStore((state) => state);
 
   const [projects, setProjects] = useState([]);
   const [name, setName] = useState<string>(testName);
@@ -107,16 +107,6 @@ export default function Home() {
     useState<boolean>(false);
 
   const [avatarShape, setAvatarShape] = useState<"circle" | "square">("circle");
-
-  useEffect(() => {
-    if (invertColors) {
-      setTextColor(colorCombo.color1.color);
-      setBackgroundColor(colorCombo.color2.color);
-    } else {
-      setTextColor(colorCombo.color2.color);
-      setBackgroundColor(colorCombo.color1.color);
-    }
-  }, [invertColors, colorCombo]);
 
   return (
     <div className="relative flex h-screen min-h-screen w-full flex-col bg-slate-50">
@@ -163,7 +153,11 @@ export default function Home() {
                   setSelectedCombo={setColorCombo}
                 />
                 <button
-                  onClick={() => setInvertColors(!invertColors)}
+                  onClick={() => {
+                    setTextColor(backgroundColor);
+                    setBackgroundColor(textColor);
+                    setInvertColors(!invertColors);
+                  }}
                   className={`group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition ease-in-out hover:bg-dark-700`}
                 >
                   <Tooltip position="bottom">Invert Colors</Tooltip>
@@ -257,21 +251,25 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className="mx-auto mb-8 w-full max-w-4xl px-8 pt-24 pb-8 sm:px-10 md:px-20">
+              <div
+                className={`mx-auto mb-8 w-auto max-w-4xl px-8 pt-24 pb-8 transition-all sm:px-10 md:px-20 ${
+                  headerCentered ? "text-center" : "text-left"
+                }`}
+              >
                 <input
                   type="text"
-                  className={`w-full rounded-md text-center text-2xl font-semibold transition-all hover:bg-sky-400/20 hover:p-2 md:w-auto md:text-left ${
+                  className={`w-full rounded-md text-2xl font-semibold transition-all hover:bg-sky-400/20 hover:p-2 ${
                     editingName ? "bg-sky-400/20 p-2" : "bg-transparent"
-                  }`}
+                  } ${headerCentered ? "text-center" : "text-left"}`}
                   onFocus={() => setEditingName(true)}
                   onBlur={() => setEditingName(false)}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
                 <TextareaAutosize
-                  className={`mt-4 h-auto w-full resize-none rounded-md text-center text-base transition-all hover:bg-sky-400/20 hover:px-2 sm:text-lg md:text-left ${
+                  className={`mt-4 h-auto w-full resize-none rounded-md text-base transition-all hover:bg-sky-400/20 hover:px-2 sm:text-lg ${
                     editingBio ? "bg-sky-400/20 px-2" : "bg-transparent"
-                  }`}
+                  } ${headerCentered ? "text-center" : "text-left"}`}
                   spellCheck="false"
                   onFocus={() => setEditingBio(true)}
                   onBlur={() => setEditingBio(false)}
@@ -280,10 +278,8 @@ export default function Home() {
                 />
                 <div
                   className={`mt-4 flex ${
-                    extendedSocials
-                      ? "w-full flex-col space-y-3"
-                      : "justify-center space-x-3 md:justify-start"
-                  }`}
+                    extendedSocials ? "w-full flex-col space-y-3" : "space-x-3"
+                  } ${headerCentered ? "justify-center" : "justify-start"}`}
                 >
                   {socials.map((social) => (
                     <SocialLink
@@ -291,6 +287,8 @@ export default function Home() {
                       network={social.network}
                       url={social.url}
                       extend={extendedSocials}
+                      monochromatic={monochromaticSocials}
+                      monochromaticColor={socialsColor}
                       editorStyle={editorStyle}
                     />
                   ))}

@@ -27,7 +27,7 @@ export function AnimateHeight({
 
   return (
     <motion.div
-      className="overflow-hidden"
+      className={isVisible ? "overflow-visible" : "overflow-hidden"}
       initial={isVisible ? "open" : "collapsed"}
       animate={isVisible ? "open" : "collapsed"}
       inherit={false}

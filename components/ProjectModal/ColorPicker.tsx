@@ -8,6 +8,7 @@ const ColorPicker = ({
   position,
   hideSwatch,
   colors,
+  size = "40px",
 }: {
   color: string;
   setColor:
@@ -16,10 +17,11 @@ const ColorPicker = ({
   position: "left" | "right";
   hideSwatch?: boolean;
   colors?: string[];
+  size?: string;
 }) => {
   return (
     <Popover
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: color, height: size, width: size }}
       className={`!aspect-square rounded-md transition ${
         hideSwatch
           ? "absolute inset-0 h-full w-full !bg-transparent"
