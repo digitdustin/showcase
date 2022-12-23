@@ -36,7 +36,7 @@ const Avatar = ({
       }`}
     >
       <div className="group relative">
-        <div className="absolute bottom-full h-14 w-full"></div>
+        <div className="absolute bottom-full h-14 w-full" />
         <Tooltip interactive position="top">
           <div className="flex items-center space-x-2">
             <div

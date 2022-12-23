@@ -7,31 +7,22 @@ import {
   Squares2X2Icon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ColorCombo,
-  colorCombos,
-  testBio,
-  testName,
-  testSocials,
-} from "../constants/testData";
+import { ColorCombo, colorCombos } from "../constants/testData";
 import TextareaAutosize from "react-textarea-autosize";
 import {
   EditorStyle,
   useEditorStylesStore,
 } from "../stores/useEditorStylesStore";
 import EditorHeader from "../components/shared/EditorHeader";
-import { Social } from "../constants/editor/types";
 import Tooltip from "../components/shared/Tooltip";
-import SocialLink from "../components/Editor/SocialLink";
 import ColorComboSelector from "../components/ProjectModal/ColorComboSelector";
 import { handleFileUpload } from "../utils/images/imageUtils";
 import Avatar from "../components/Editor/Avatar";
 import AdvancedSettings from "../components/Editor/AdvancedSettings";
 import SocialsModal from "../components/Editor/SocialsModal/SocialsModal";
-import { motion as m } from "framer-motion";
 import { usePageContentStore } from "../stores/usePageContentStore";
 import { Toaster } from "react-hot-toast";
-import { notify } from "../utils/toast/toastUtils";
+import SocialsList from "../components/Editor/SocialsList";
 
 interface FontStyle {
   [key: string]: {
@@ -127,7 +118,9 @@ export default function Home() {
       />
       <SocialsModal
         isOpen={socialModalOpen}
-        onClose={() => setSocialModalOpen(false)}
+        onClose={() => {
+          setSocialModalOpen(false);
+        }}
       />
       <div className={`flex h-full w-full overflow-hidden`}>
         <div
@@ -287,43 +280,7 @@ export default function Home() {
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                 />
-                <div
-                  className={`mt-4 flex ${
-                    extendedSocials ? "w-full flex-col space-y-3" : "space-x-3"
-                  } ${headerCentered ? "justify-center" : "justify-start"}`}
-                >
-                  {socials.map((social) => (
-                    <SocialLink
-                      key={social.network}
-                      network={social.network}
-                      url={social.url}
-                      extend={extendedSocials}
-                      monochromatic={monochromaticSocials}
-                      monochromaticColor={socialsColor}
-                      editorStyle={editorStyle}
-                      roundedSocials={roundedSocials}
-                    />
-                  ))}
-                  <m.div layout="position" className="group relative">
-                    {extendedSocials ? (
-                      <button
-                        onClick={() => setSocialModalOpen(true)}
-                        className="flex w-full items-center justify-center space-x-2 rounded-md border-2 border-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 font-sans text-sm text-white shadow-md shadow-indigo-800/20 transition hover:shadow-lg hover:shadow-indigo-800/20"
-                      >
-                        <p>Add Social Link</p>
-                        <PlusIcon className="h-4 w-4 text-white" />
-                      </button>
-                    ) : (
-                      <>
-                        <Tooltip position="bottom">Add Social Link</Tooltip>
-                        <PlusIcon
-                          onClick={() => setSocialModalOpen(true)}
-                          className={`h-10 w-10 cursor-pointer rounded-full border-2 border-white bg-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 p-1 text-white shadow-md transition hover:shadow-lg`}
-                        />
-                      </>
-                    )}
-                  </m.div>
-                </div>
+                <SocialsList setSocialModalOpen={setSocialModalOpen} />
               </div>
               <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 px-8 sm:px-10 md:px-20">
                 <div className="flex items-center justify-between">

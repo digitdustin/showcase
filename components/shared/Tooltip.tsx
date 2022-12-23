@@ -30,7 +30,7 @@ const Tooltip = ({
 
   return (
     <div
-      className={`absolute z-10 w-auto whitespace-nowrap rounded-lg bg-black py-2 px-3 text-center font-sans text-xs text-white opacity-0 transition group-hover:opacity-100 ${
+      className={`absolute z-50 w-auto whitespace-nowrap rounded-lg bg-black py-2 px-3 text-center font-sans text-xs text-white opacity-0 transition group-hover:opacity-100 ${
         positionClasses[position].box
       } ${interactive ? "pointer-events-auto" : "pointer-events-none"}`}
     >

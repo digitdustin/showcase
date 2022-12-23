@@ -9,6 +9,8 @@ import { SocialIcon } from "react-social-icons";
 import Tooltip from "../../shared/Tooltip";
 import { usePageContentStore } from "../../../stores/usePageContentStore";
 import { notify } from "../../../utils/toast/toastUtils";
+import { AnimateHeight } from "../../shared/AnimateHeight";
+import { heightAnim } from "../../../constants/variants";
 
 const projectTypes = ["web", "app", "mobile"];
 
@@ -57,7 +59,15 @@ const SocialsModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        setNetwork("");
+        setUrl("");
+        setPlaceholder("");
+      }}
+    >
       <Dialog.Panel className="w-full max-w-xl transform rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all">
         <Dialog.Title
           as="h3"
@@ -101,16 +111,19 @@ const SocialsModal = ({
         </ModalSection>
 
         {/* Project Link */}
-        <ModalSection>
-          <ModalLabel label="Social URL:" />
-          <IconInput
-            icon={LinkIcon}
-            value={url}
-            placeholder={placeholder}
-            type="text"
-            setValue={setUrl}
-          />
-        </ModalSection>
+        <AnimateHeight isVisible={network.length > 0} variants={heightAnim}>
+          <ModalSection>
+            <ModalLabel label="Social URL:" />
+            <IconInput
+              icon={LinkIcon}
+              value={url}
+              placeholder={placeholder}
+              type="text"
+              setValue={setUrl}
+              disabled={network.length === 0}
+            />
+          </ModalSection>
+        </AnimateHeight>
         <ModalSection>
           <button
             onClick={() => {
