@@ -99,3 +99,30 @@
   --gradient-color-4: #0F595E;
 }
 
+.shiny {
+  color: white;
+  position: relative;
+  border: none;
+  background: #3984ff;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.shiny::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--y, 0) * 1px - 30px);
+  left: calc(var(--x, 0) * 1px - 30px);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(white, #3984ff00 60%);
+
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.shiny:hover::after {
+  opacity: 0.4;
+}
