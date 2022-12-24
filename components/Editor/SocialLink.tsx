@@ -15,6 +15,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Tooltip from "../shared/Tooltip";
 import { useEditorStylesStore } from "../../stores/useEditorStylesStore";
+import { usePageContentStore } from "../../stores/usePageContentStore";
 
 const SocialLink = ({
   social,
@@ -32,15 +33,16 @@ const SocialLink = ({
   )?.color;
 
   const {
-    editorStyle,
     extendedSocials,
     monochromaticSocials,
     socialsColor,
     roundedSocials,
   } = useEditorStylesStore((state) => state);
 
+  const { pageTheme } = usePageContentStore((state) => state);
+
   const socialStyle: () => MotionStyle = () => {
-    switch (editorStyle) {
+    switch (pageTheme) {
       default:
         return {
           backgroundColor: monochromaticSocials
@@ -51,7 +53,7 @@ const SocialLink = ({
   };
 
   const iconColor = () => {
-    switch (editorStyle) {
+    switch (pageTheme) {
       case "flat":
       case "brutalist":
         return monochromaticSocials ? socialsColor : "";
@@ -73,7 +75,7 @@ const SocialLink = ({
                   roundedSocials ? "rounded-full" : "rounded-md"
                 }`
           } ${
-            editorStyle === "brutalist"
+            pageTheme === "brutalist"
               ? "-translate-y-[3px] -translate-x-[3px] border-2 border-dark-800 hover:translate-y-0 hover:translate-x-0"
               : "hover:-translate-y-1"
           }`}
@@ -98,7 +100,7 @@ const SocialLink = ({
             </div>
           ) : null}
         </m.div>
-        {editorStyle === "brutalist" && (
+        {pageTheme === "brutalist" && (
           <div
             className={`absolute inset-0 z-0 h-full w-full border-[6px] border-dark-800 ${
               extendedSocials

@@ -83,7 +83,7 @@ export default function Home() {
           <div className="flex w-full items-center justify-center border-b border-b-dark-600 bg-dark-800 px-6 py-2">
             {/* Font Select */}
             <div className="flex h-full space-x-2">
-              <div className="flex items-center space-x-2 text-white">
+              {/* <div className="flex items-center space-x-2 text-white">
                 <button
                   onClick={() => setExtendedSocials(!extendedSocials)}
                   className={`group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition hover:bg-dark-700 ${
@@ -128,7 +128,7 @@ export default function Home() {
                 </button>
               </div>
 
-              <Divider />
+              <Divider /> */}
               <div className="flex items-center space-x-2 text-white">
                 <button
                   onClick={() => setPageTheme("flat")}
