@@ -32,6 +32,36 @@
   animation-delay: 0.4s;
 }
 
+@layer components {
+  input[type=range] {
+    @apply appearance-none bg-transparent;
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    @apply  bg-black/25 rounded-full;
+  }
+
+  input[type=range]::-moz-range-track {
+    @apply bg-black/25 rounded-full;
+  }
+
+  input[type=range]::-ms-track {
+    @apply bg-black/25 rounded-full;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    @apply appearance-none bg-indigo-500 rounded-full w-4 h-4;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    @apply appearance-none bg-indigo-500 rounded-full w-4 h-4;
+  }
+
+  input[type=range]::-ms-thumb {
+    @apply appearance-none bg-indigo-500 rounded-full w-4 h-4;
+  }
+}
+
 .center-vertical {
   @apply -translate-y-1/2 top-1/2;
 }
@@ -42,9 +72,6 @@
 
 
 // target the div of hieght 30px of the third child of the twitter-picker div
-
-
-
 
 .editor-color-picker .twitter-picker > div:nth-child(3) > div:nth-last-child(3) {
   display: none !important;

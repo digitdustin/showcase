@@ -16,6 +16,33 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import ThemeDropdown from "./ThemeDropdown";
 import BaseSettings from "./Base/BaseSettings";
 import { motion as m, AnimatePresence } from "framer-motion";
+import GlassSettings from "./Glass/GlassSettings";
+
+export const RangeInput = ({
+  value,
+  setValue,
+  min,
+  max,
+  step,
+}: {
+  value: number;
+  setValue: (value: number) => void;
+  min: number;
+  max: number;
+  step: number;
+}) => {
+  return (
+    <input
+      type="range"
+      min={min}
+      max={max}
+      step={step}
+      value={value}
+      onChange={(e) => setValue(Number(e.target.value))}
+      className="h-2 w-1/2 rounded-sm bg-dark-500 "
+    />
+  );
+};
 
 export const Toggle = ({
   enabled,
@@ -91,22 +118,35 @@ const AdvancedSettings = ({
           </div>
         </div>
       </div>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {pageTheme === "flat" || pageTheme === "brutalist" ? (
-          <m.div
-            key="flat"
-            variants={settingsAnim}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
+          <SettingsTransitionContainer key="flat">
             <BaseSettings setSocialModalOpen={setSocialModalOpen} />
-          </m.div>
+          </SettingsTransitionContainer>
         ) : (
-          <div></div>
+          <SettingsTransitionContainer key="glass">
+            <GlassSettings setSocialModalOpen={setSocialModalOpen} />
+          </SettingsTransitionContainer>
         )}
       </AnimatePresence>
     </SidePanel>
+  );
+};
+
+const SettingsTransitionContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return (
+    <m.div
+      variants={settingsAnim}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      {children}
+    </m.div>
   );
 };
 

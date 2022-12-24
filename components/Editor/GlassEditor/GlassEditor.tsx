@@ -10,6 +10,8 @@ import Tooltip from "../../shared/Tooltip";
 import GlassSocialsList from "./GlassSocialsList";
 import { useGlassStyleStore } from "../../../stores/useGlassStyleStore";
 import GlassAvatar from "./GlassAvatar";
+import hexRgb from "hex-rgb";
+import { backgroundColors } from "../../../constants/testData";
 
 const GlassEditor = ({
   projectModalOpen,
@@ -22,7 +24,15 @@ const GlassEditor = ({
   socialModalOpen: boolean;
   setSocialModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { textColor } = useGlassStyleStore((state) => state);
+  const {
+    textColor,
+    showOverlay,
+    fadeOverlay,
+    overlayColor,
+    overlayOpacity,
+    overlayBlur,
+    backgroundColors,
+  } = useGlassStyleStore((state) => state);
 
   const { name, setName, bio, setBio, bannerImage, setBannerImage } =
     usePageContentStore((state) => state);
@@ -33,13 +43,38 @@ const GlassEditor = ({
   useEffect(() => {
     if (window && document) {
       // Create your instance
-      const gradient = new Gradient();
+      const gradient = new Gradient(backgroundColors);
 
       // Call `initGradient` with the selector to your canvas
       //@ts-ignore
       gradient.initGradient("#gradient-canvas");
     }
-  }, []);
+  }, [backgroundColors]);
+
+  const rgbColors = backgroundColors.map((color) => hexRgb(color));
+  const rgbOverlayColor = hexRgb(overlayColor);
+
+  const borderTop = fadeOverlay
+    ? "none"
+    : `1px solid rgba(${rgbOverlayColor.red}, ${rgbOverlayColor.green}, ${rgbOverlayColor.blue}, 0.01)`;
+
+  const startGradientOpacity = fadeOverlay
+    ? "0"
+    : overlayOpacity - 0.3 < 0
+    ? "0"
+    : overlayOpacity - 0.3;
+
+  const background = `linear-gradient(180deg, rgba(${rgbOverlayColor.red}, ${
+    rgbOverlayColor.green
+  }, ${rgbOverlayColor.blue}, ${startGradientOpacity}) ${
+    fadeOverlay ? "0px" : "200px"
+  }, rgba(${rgbOverlayColor.red}, ${rgbOverlayColor.green}, ${
+    rgbOverlayColor.blue
+  }, ${overlayOpacity}) ${fadeOverlay ? "600px" : "400px"})`;
+
+  const height = fadeOverlay ? "100%" : "calc(100% - 208px)";
+
+  const backdropFilter = `blur(${overlayBlur}px)`;
 
   return (
     <div
@@ -52,14 +87,20 @@ const GlassEditor = ({
       <div className="relative mx-auto h-52 w-full max-w-4xl ">
         <GlassAvatar />
       </div>
-      <div
-        style={{
-          height: "calc(100% - 208px)",
-          background:
-            "linear-gradient(180deg, rgba(3, 47, 70, 0.4) 0%, rgba(3, 47, 70, .9) 400px)",
-        }}
-        className="absolute left-0 top-0 mt-52 w-full rounded-md"
-      ></div>
+      {showOverlay && (
+        <div
+          style={{
+            height,
+            background,
+            WebkitBackdropFilter: backdropFilter,
+            backdropFilter: backdropFilter,
+            borderTop,
+          }}
+          className={`absolute left-0 top-0 w-full rounded-md transition ${
+            fadeOverlay ? "" : "mt-52"
+          }`}
+        />
+      )}
       <div
         className={`mx-auto mb-8 w-auto max-w-4xl px-8 pt-24 pb-8 text-center transition-all sm:px-10 md:px-20`}
       >

@@ -493,7 +493,7 @@ function e(object, propertyName, val) {
 
 //Gradient object
 class Gradient {
-  constructor(...t) {
+  constructor(colors) {
     e(this, "el", void 0),
       e(this, "cssVarRetries", 0),
       e(this, "maxCssVarRetries", 200),
@@ -509,7 +509,7 @@ class Gradient {
       e(this, "isIntersecting", !1),
       e(this, "shaderFiles", void 0),
       e(this, "vertexShader", void 0),
-      e(this, "sectionColors", void 0),
+      e(this, "sectionColors", colors),
       e(this, "computedCanvasStyle", void 0),
       e(this, "conf", void 0),
       e(this, "uniforms", void 0),
@@ -830,17 +830,8 @@ class Gradient {
    * Initializes the four section colors by retrieving them from css variables.
    */
   initGradientColors() {
-    this.sectionColors = [
-      "--gradient-color-1",
-      "--gradient-color-2",
-      "--gradient-color-3",
-      "--gradient-color-4",
-    ]
-      .map((cssPropertyName) => {
-        console.log(cssPropertyName);
-        let hex = this.computedCanvasStyle
-          .getPropertyValue(cssPropertyName)
-          .trim();
+    this.sectionColors = this.sectionColors
+      .map((hex) => {
         //Check if shorthand hex value was used and double the length so the conversion in normalizeColor will work.
         if (4 === hex.length) {
           const hexTemp = hex
