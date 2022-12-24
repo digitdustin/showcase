@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon, PlusIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import { SocialIcon } from "react-social-icons";
 import { heightAnim } from "../../../../constants/variants";
@@ -40,6 +40,30 @@ const GlassSettings = ({
     setBackgroundColors(newColors);
   };
 
+  const randomArrays = [
+    ["#2D3E50", "#01C26E", "#F3C40F", "#E24C3F", "#8F44AB"],
+    ["#53DF83", "#47D2E9", "#EEEEEE", "#3F3F3F", "#47D2E9"],
+    ["#4CD4B0", "#FFFCE6", "#EDD834", "#F24D16", "#7D1424"],
+    ["#FE6860", "#FE8A71", "#F3C9BF", "#D9BBAE", "#0C545C"],
+    ["#D1D5D8", "#3498DB", "#F1C40F", "#E74C3C", "#1ABC9C"],
+    ["#1F9EA3", "#F8BD97", "#3B0102", "#9E5428", "#BFB992"],
+    ["#4A4E4D", "#0E9AA7", "#3DA4AB", "#F6CD61", "#FE8A71"],
+    ["#043D5D", "#032E46", "#0F595E", "#23B684", "#FFFFFF"],
+  ];
+
+  const randomizeColors = () => {
+    // return list of 4 colors from a random entry of randomArrays
+    const randomArray =
+      randomArrays[Math.floor(Math.random() * randomArrays.length)];
+    const randomColors = [];
+    for (let i = 0; i < 4; i++) {
+      randomColors.push(
+        randomArray[Math.floor(Math.random() * randomArray.length)]
+      );
+    }
+    setBackgroundColors(randomColors);
+  };
+
   return (
     <>
       <PanelSection title="Page">
@@ -67,6 +91,18 @@ const GlassSettings = ({
             </div>
           </div>
         ))}
+        <div className="flex flex-col py-2">
+          <button
+            onClick={() => {
+              randomizeColors();
+            }}
+            className="flex items-center justify-center space-x-2 rounded-sm bg-dark-500 py-2 px-4 transition-colors hover:bg-dark-600"
+          >
+            <ArrowPathIcon className="h-4 w-4" />
+            <p className="text-sm text-dark-100">Randomize Colors</p>
+          </button>
+        </div>
+
         <div className="flex flex-col py-2">
           <div className="flex items-center justify-between">
             <p className="text-sm text-dark-100">Show Overlay:</p>
@@ -97,7 +133,6 @@ const GlassSettings = ({
             </div>
             <div className="mt-6 flex items-center justify-between">
               <p className="text-sm text-dark-100">Overlay Opacity: </p>
-
               <RangeInput
                 value={overlayOpacity}
                 setValue={setOverlayOpacity}
