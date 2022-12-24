@@ -17,17 +17,42 @@ export const tabAnim = {
   },
 };
 
-export const appearAnim = {
+//settings anim is used for the settings panel, should stagger the children
+export const settingsAnim = {
   hidden: {
     opacity: 0,
-    y: 20,
+    y: 10,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.2,
-      ease: "linear",
+      ease: "easeIn",
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+export const appearAnim = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeIn",
     },
   },
 };

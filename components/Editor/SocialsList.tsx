@@ -46,11 +46,6 @@ const SocialsList = ({
             key={social.network}
             network={social.network}
             url={social.url}
-            extend={extendedSocials}
-            monochromatic={monochromaticSocials}
-            monochromaticColor={socialsColor}
-            editorStyle={editorStyle}
-            roundedSocials={roundedSocials}
           />
         );
       })}

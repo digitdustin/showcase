@@ -39,7 +39,7 @@ const ColorPicker = ({
         leaveTo="opacity-0 scale-95"
       >
         <Popover.Panel
-          className={`absolute z-20 ${
+          className={`absolute z-10 ${
             position === "right" ? "right-0" : "left-0"
           }`}
         >

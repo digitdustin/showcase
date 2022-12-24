@@ -1,30 +1,27 @@
 import { CameraIcon } from "@heroicons/react/24/solid";
-import {
-  EditorStyle,
-  useEditorStylesStore,
-} from "../../stores/useEditorStylesStore";
-import { usePageContentStore } from "../../stores/usePageContentStore";
-import { handleFileUpload } from "../../utils/images/imageUtils";
-import Tooltip from "../shared/Tooltip";
+import { useGlassStyleStore } from "../../../stores/useGlassStyleStore";
+import { usePageContentStore } from "../../../stores/usePageContentStore";
+import { handleFileUpload } from "../../../utils/images/imageUtils";
+import Tooltip from "../../shared/Tooltip";
 
-const Avatar = () => {
-  const { headerCentered, backgroundColor, avatarShape, setAvatarShape } =
-    useEditorStylesStore((state) => state);
+const GlassAvatar = () => {
+  const { avatarShape, setAvatarShape } = useGlassStyleStore((state) => state);
 
   const { avatarImage, setAvatarImage } = usePageContentStore((state) => state);
 
   return (
     <div
       style={{
-        borderColor: backgroundColor,
+        background:
+          "linear-gradient( 120deg,rgba( 255, 255, 255, 0.38 ) 10%, rgba( 255, 255, 255, 0.10 ) 100% )",
+        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        backdropFilter: "blur( 13.5px )",
+        WebkitBackdropFilter: "blur( 13.5px )",
+        border: "1px solid rgba( 255, 255, 255, 0.18 )",
       }}
       className={`absolute -bottom-20 z-20 h-36 w-36 border-4 bg-slate-600 ${
         avatarShape === "circle" ? "rounded-full" : "rounded-lg"
-      } ${
-        headerCentered
-          ? "left-1/2 -translate-x-1/2"
-          : "left-8 translate-x-0 sm:left-10 md:left-20"
-      }`}
+      } left-1/2 -translate-x-1/2`}
     >
       <div className="group relative">
         <div className="absolute bottom-full h-14 w-full" />
@@ -38,7 +35,7 @@ const Avatar = () => {
             >
               <div className="h-full w-full rounded-sm border"></div>
             </div>
-            <div className="mx-2 h-full w-1 bg-white"></div>
+            <div className="mx-2 h-full w-1"></div>
             <div
               onClick={() => setAvatarShape("circle")}
               className={`flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm p-1 transition hover:bg-dark-700 ${
@@ -85,4 +82,4 @@ const Avatar = () => {
   );
 };
 
-export default Avatar;
+export default GlassAvatar;

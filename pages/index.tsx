@@ -8,7 +8,7 @@ import {
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import { ColorCombo, colorCombos } from "../constants/testData";
-import TextareaAutosize from "react-textarea-autosize";
+import { appearAnim } from "../constants/variants";
 import {
   EditorStyle,
   useEditorStylesStore,
@@ -18,81 +18,32 @@ import Tooltip from "../components/shared/Tooltip";
 import ColorComboSelector from "../components/ProjectModal/ColorComboSelector";
 import { handleFileUpload } from "../utils/images/imageUtils";
 import Avatar from "../components/Editor/Avatar";
-import AdvancedSettings from "../components/Editor/AdvancedSettings";
+import AdvancedSettings from "../components/Editor/AdvancedSettings/AdvancedSettings";
 import SocialsModal from "../components/Editor/SocialsModal/SocialsModal";
 import { usePageContentStore } from "../stores/usePageContentStore";
 import { Toaster } from "react-hot-toast";
-import SocialsList from "../components/Editor/SocialsList";
-
-interface FontStyle {
-  [key: string]: {
-    fontClass: string;
-    label: string;
-    value: EditorStyle;
-  };
-}
-
-const fontClassMap: FontStyle = {
-  default: {
-    fontClass: "!font-sans",
-    label: "Default",
-    value: "default",
-  },
-  serif: {
-    fontClass: "!font-serif",
-    label: "Serif",
-    value: "serif",
-  },
-  mono: {
-    fontClass: "!font-mono",
-    label: "Mono",
-    value: "mono",
-  },
-  grotesque: {
-    fontClass: "!font-grotesque",
-    label: "Brutalist",
-    value: "grotesque",
-  },
-};
+import FontDropdown from "../components/Editor/FontDropdown";
+import BaseEditor from "../components/Editor/BaseEditor/BaseEditor";
+import GlassEditor from "../components/Editor/GlassEditor/GlassEditor";
+import { AnimatePresence } from "framer-motion";
+import { motion as m } from "framer-motion";
 
 const Divider = () => <div className="h-full w-[2px] bg-indigo-50/20" />;
 
 export default function Home() {
   const {
-    editorStyle,
-    setEditorStyle,
     backgroundColor,
     setBackgroundColor,
     textColor,
     setTextColor,
+    font,
     extendedSocials,
     setExtendedSocials,
-    monochromaticSocials,
-    setMonochromaticSocials,
-    socialsColor,
-    setSocialsColor,
-    headerCentered,
-    setHeaderCentered,
-    roundedSocials,
   } = useEditorStylesStore((state) => state);
 
-  const {
-    name,
-    setName,
-    bio,
-    setBio,
-    socials,
-    setSocials,
-    bannerImage,
-    setBannerImage,
-    avatarImage,
-    setAvatarImage,
-  } = usePageContentStore((state) => state);
+  const { pageTheme, setPageTheme } = usePageContentStore((state) => state);
 
   const [projects, setProjects] = useState([]);
-
-  const [editingName, setEditingName] = useState<boolean>(false);
-  const [editingBio, setEditingBio] = useState<boolean>(false);
 
   const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
   const [socialModalOpen, setSocialModalOpen] = useState<boolean>(false);
@@ -106,7 +57,7 @@ export default function Home() {
   const [avatarShape, setAvatarShape] = useState<"circle" | "square">("circle");
 
   return (
-    <div className="relative flex h-screen min-h-screen w-full flex-col bg-slate-50">
+    <div className="relative flex h-screen min-h-screen w-full flex-col overflow-hidden bg-slate-50">
       <Toaster />
       {/* Logo Header */}
       <EditorHeader />
@@ -151,6 +102,10 @@ export default function Home() {
               </div>
               <Divider />
               <div className="flex items-center space-x-2 text-white">
+                <FontDropdown />
+              </div>
+              <Divider />
+              <div className="flex items-center space-x-2 text-white">
                 <ColorComboSelector
                   invert={invertColors}
                   selectedCombo={colorCombo}
@@ -175,22 +130,44 @@ export default function Home() {
 
               <Divider />
               <div className="flex items-center space-x-2 text-white">
-                {Object.values(fontClassMap).map((font) => {
-                  return (
-                    <button
-                      key={font.value}
-                      onClick={() => setEditorStyle(font.value)}
-                      className={`${
-                        editorStyle === font.value ? "bg-dark-700" : ""
-                      } group relative aspect-square w-10 cursor-pointer rounded-md font-sans transition hover:bg-dark-700 ${
-                        fontClassMap[editorStyle].fontClass
-                      }`}
-                    >
-                      <Tooltip position="bottom">{font.label}</Tooltip>
-                      Aa
-                    </button>
-                  );
-                })}
+                <button
+                  onClick={() => setPageTheme("flat")}
+                  className={`${
+                    pageTheme === "flat" ? "bg-dark-700" : ""
+                  } group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition hover:bg-dark-700`}
+                >
+                  <Tooltip position="bottom">Flat</Tooltip>
+                  <div className="h-4 w-4 rounded-sm bg-white" />
+                </button>
+                <button
+                  onClick={() => setPageTheme("brutalist")}
+                  className={`${
+                    pageTheme === "brutalist" ? "bg-dark-700" : ""
+                  } group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition hover:bg-dark-700`}
+                >
+                  <Tooltip position="bottom">Brutalist</Tooltip>
+                  <div
+                    style={{
+                      boxShadow: "2px 2px 0 0px #fff",
+                    }}
+                    className="h-4 w-4 rounded-sm border-2 border-white"
+                  />
+                </button>
+                <button
+                  onClick={() => setPageTheme("glass")}
+                  className={`${
+                    pageTheme === "glass" ? "bg-dark-700" : ""
+                  } group relative flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md font-sans transition hover:bg-dark-700`}
+                >
+                  <Tooltip position="bottom">Glass</Tooltip>
+                  <div
+                    style={{
+                      background:
+                        "radial-gradient(circle at 100% 100%, #333, #333 50%, #eee 75%, #333333 75%)",
+                    }}
+                    className="h-4 w-4 rounded-sm border"
+                  />
+                </button>
               </div>
               <Divider />
               <button
@@ -203,115 +180,29 @@ export default function Home() {
             </div>
           </div>
           <div
-            className={`h-auto w-full overflow-y-auto bg-slate-200 p-4 ${fontClassMap[editorStyle].fontClass}`}
+            className={`h-auto w-full overflow-y-auto bg-slate-200 p-4 ${font.className}`}
           >
-            {/* Header */}
-            <div
-              style={{
-                backgroundColor,
-                color: textColor,
-              }}
-              className={`h-auto w-full rounded-md pb-4 transition-colors`}
-            >
-              <div className="relative h-52 w-full rounded-t-md">
-                {/* Change Banner Image */}
-                <div className="group absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-t-md transition hover:bg-black/30">
-                  <label
-                    htmlFor={"banner-image-upload"}
-                    className="flex h-full w-full cursor-pointer items-center justify-center"
-                  >
-                    <div className="opacity-0 transition group-hover:opacity-100">
-                      <CameraIcon className="mx-auto h-5 w-5 text-white" />
-                      <span className="font-sans text-sm font-semibold text-white">
-                        Change Banner Image
-                      </span>
-                    </div>
-                    <input
-                      type="file"
-                      id={"banner-image-upload"}
-                      className="hidden"
-                      accept="image/*"
-                      onChange={(e) => {
-                        handleFileUpload({
-                          e,
-                          setImage: setBannerImage,
-                        });
-                      }}
-                    />
-                  </label>
-                </div>
-                <img
-                  src={bannerImage}
-                  className={`absolute h-full w-full rounded-t-md object-cover`}
-                />
-
-                <div className="relative mx-auto h-52 w-full max-w-4xl">
-                  <Avatar
-                    avatarShape={avatarShape}
-                    setAvatarShape={setAvatarShape}
-                    avatarImage={avatarImage}
-                    setAvatarImage={setAvatarImage}
-                    editorStyle={editorStyle}
+            <AnimatePresence mode="wait">
+              {pageTheme === "flat" || pageTheme === "brutalist" ? (
+                <AnimatedEditorContainer key="base">
+                  <BaseEditor
+                    projectModalOpen={projectModalOpen}
+                    setProjectModalOpen={setProjectModalOpen}
+                    socialModalOpen={socialModalOpen}
+                    setSocialModalOpen={setSocialModalOpen}
                   />
-                </div>
-              </div>
-              <div
-                className={`mx-auto mb-8 w-auto max-w-4xl px-8 pt-24 pb-8 transition-all sm:px-10 md:px-20 ${
-                  headerCentered ? "text-center" : "text-left"
-                }`}
-              >
-                <input
-                  type="text"
-                  className={`w-full rounded-md text-2xl font-semibold transition-all hover:bg-sky-400/20 hover:p-2 ${
-                    editingName ? "bg-sky-400/20 p-2" : "bg-transparent"
-                  } ${headerCentered ? "text-center" : "text-left"}`}
-                  onFocus={() => setEditingName(true)}
-                  onBlur={() => setEditingName(false)}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <TextareaAutosize
-                  className={`mt-4 h-auto w-full resize-none rounded-md text-base transition-all hover:bg-sky-400/20 hover:px-2 sm:text-lg ${
-                    editingBio ? "bg-sky-400/20 px-2" : "bg-transparent"
-                  } ${headerCentered ? "text-center" : "text-left"}`}
-                  spellCheck="false"
-                  onFocus={() => setEditingBio(true)}
-                  onBlur={() => setEditingBio(false)}
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                />
-                <SocialsList setSocialModalOpen={setSocialModalOpen} />
-              </div>
-              <div className="mx-auto mb-8 w-full max-w-4xl space-y-4 px-8 sm:px-10 md:px-20">
-                <div className="flex items-center justify-between">
-                  <h1 className="text-2xl font-semibold">Projects</h1>
-                  <button
-                    onClick={() => setProjectModalOpen(true)}
-                    className="flex items-center space-x-2 rounded-md border-2 border-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 py-2 px-4 font-sans text-sm text-white shadow-md shadow-indigo-800/20 transition hover:shadow-lg hover:shadow-indigo-800/20"
-                  >
-                    <p>Add Project</p>
-                    <PlusIcon className="h-4 w-4 text-white" />
-                  </button>
-                </div>
-                <div
-                  style={{
-                    color: textColor,
-                  }}
-                  className="flex w-full flex-col items-center justify-center space-y-2 rounded-md p-4 py-8 opacity-80 transition"
-                >
-                  <button className="group relative">
-                    <Tooltip position="top">Add Project</Tooltip>
-                    <PlusIcon
-                      onClick={() => setProjectModalOpen(true)}
-                      className="h-8 w-8 cursor-pointer rounded-full border-2 border-white bg-white bg-gradient-to-br from-indigo-400 to-fuchsia-400 p-1 text-white shadow-md transition hover:shadow-lg"
-                    />
-                  </button>
-                  <p className="ml-2 text-center font-sans">
-                    You currently have no projects... Click add to create one!
-                  </p>
-                </div>
-              </div>
-            </div>
+                </AnimatedEditorContainer>
+              ) : (
+                <AnimatedEditorContainer key="glass">
+                  <GlassEditor
+                    projectModalOpen={projectModalOpen}
+                    setProjectModalOpen={setProjectModalOpen}
+                    socialModalOpen={socialModalOpen}
+                    setSocialModalOpen={setSocialModalOpen}
+                  />
+                </AnimatedEditorContainer>
+              )}
+            </AnimatePresence>
           </div>
         </div>
         <AdvancedSettings
@@ -323,3 +214,20 @@ export default function Home() {
     </div>
   );
 }
+
+const AnimatedEditorContainer = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return (
+    <m.div
+      variants={appearAnim}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      {children}
+    </m.div>
+  );
+};

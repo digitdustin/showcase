@@ -1,6 +1,7 @@
 import create from "zustand";
 import { Social } from "../constants/editor/types";
 import { testSocials } from "../constants/testData";
+import { EditorStyle } from "./useEditorStylesStore";
 
 interface PageContentStore {
   name: string;
@@ -13,6 +14,8 @@ interface PageContentStore {
   setBannerImage: (bannerImage: string) => void;
   avatarImage: string;
   setAvatarImage: (avatarImage: string) => void;
+  pageTheme: EditorStyle;
+  setPageTheme: (pageTheme: EditorStyle) => void;
 }
 
 export const usePageContentStore = create<PageContentStore>((set) => ({
@@ -27,4 +30,6 @@ export const usePageContentStore = create<PageContentStore>((set) => ({
   setBannerImage: (bannerImage: string) => set({ bannerImage }),
   avatarImage: "https://github.com/digitdustin.png",
   setAvatarImage: (avatarImage: string) => set({ avatarImage }),
+  pageTheme: "glass",
+  setPageTheme: (pageTheme: EditorStyle) => set({ pageTheme }),
 }));

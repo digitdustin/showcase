@@ -75,11 +75,6 @@ export const availableSocials: AvailableSocial[] = [
     color: "#cb2128",
   },
   {
-    network: "tiktok",
-    placeholder: "tiktok.com/@username",
-    color: "#000000",
-  },
-  {
     network: "spotify",
     placeholder: "spotify.com/user/username",
     color: "#2EBD59",
@@ -105,19 +100,9 @@ export const availableSocials: AvailableSocial[] = [
     color: "#007CFF",
   },
   {
-    network: "stackoverflow",
-    placeholder: "stackoverflow.com/users/username",
-    color: "#ed803d",
-  },
-  {
     network: "reddit",
     placeholder: "reddit.com/user/username",
     color: "#FF4500",
-  },
-  {
-    network: "discord",
-    placeholder: "discord.com/username",
-    color: "#7289DA",
   },
   {
     network: "snapchat",
@@ -129,6 +114,21 @@ export const availableSocials: AvailableSocial[] = [
     placeholder: "username.tumblr.com",
     color: "#2c4762",
   },
+  /* {
+    network: "discord",
+    placeholder: "discord.com/username",
+    color: "#7289DA",
+  },
+  {
+    network: "stackoverflow",
+    placeholder: "stackoverflow.com/users/username",
+    color: "#ed803d",
+  },
+  {
+    network: "tiktok",
+    placeholder: "tiktok.com/@username",
+    color: "#000000",
+  }, */
 ];
 
 export const backgroundColors = [
@@ -167,6 +167,47 @@ export interface ColorCombo {
     name: string;
   };
 }
+
+export interface FontObject {
+  name: string;
+  className: string;
+  fontFamily: string;
+  fallback: string;
+}
+
+/*
+  sans: ["DM Sans", "sans-serif"],
+  serif: ["Source Serif Pro", "serif"],
+  mono: ["Chivo Mono", "monospace"],
+  grotesque: ["ambit", "sans-serif"],
+*/
+
+export const fonts: FontObject[] = [
+  {
+    name: "default",
+    className: "font-sans",
+    fontFamily: "DM Sans",
+    fallback: "sans-serif",
+  },
+  {
+    name: "serif",
+    className: "font-serif",
+    fontFamily: "Source Serif Pro",
+    fallback: "serif",
+  },
+  {
+    name: "mono",
+    className: "font-mono",
+    fontFamily: "Chivo Mono",
+    fallback: "monospace",
+  },
+  {
+    name: "grotesque",
+    className: "font-grotesque",
+    fontFamily: "ambit",
+    fallback: "sans-serif",
+  },
+];
 
 export const colorCombos: ColorCombo[] = [
   {
