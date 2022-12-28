@@ -18,13 +18,9 @@ const Avatar = () => {
       style={{
         borderColor: backgroundColor,
       }}
-      className={`absolute -bottom-20 z-20 h-36 w-36 border-4 bg-slate-600 ${
+      className={`z-20 h-36 w-36 border-4 bg-slate-600 ${
         avatarShape === "circle" ? "rounded-full" : "rounded-lg"
-      } ${
-        headerCentered
-          ? "left-1/2 -translate-x-1/2"
-          : "left-8 translate-x-0 sm:left-10 md:left-20"
-      }`}
+      } `}
     >
       <div className="group relative">
         <div className="absolute bottom-full h-14 w-full" />

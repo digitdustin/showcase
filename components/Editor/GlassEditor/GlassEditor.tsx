@@ -59,9 +59,9 @@ const GlassEditor = ({
     : `1px solid rgba(${rgbOverlayColor.red}, ${rgbOverlayColor.green}, ${rgbOverlayColor.blue}, 0.01)`;
 
   const startGradientOpacity = fadeOverlay
-    ? "0"
+    ? 0
     : overlayOpacity - 0.3 < 0
-    ? "0"
+    ? 0.05
     : overlayOpacity - 0.3;
 
   const background = `linear-gradient(180deg, rgba(${rgbOverlayColor.red}, ${

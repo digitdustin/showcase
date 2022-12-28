@@ -30,6 +30,6 @@ export const usePageContentStore = create<PageContentStore>((set) => ({
   setBannerImage: (bannerImage: string) => set({ bannerImage }),
   avatarImage: "https://github.com/digitdustin.png",
   setAvatarImage: (avatarImage: string) => set({ avatarImage }),
-  pageTheme: "glass",
+  pageTheme: "flat",
   setPageTheme: (pageTheme: EditorStyle) => set({ pageTheme }),
 }));

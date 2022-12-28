@@ -20,7 +20,9 @@ const GlassSocialLink = ({
   const mouseMoveEvent = (e: MouseEvent) => {
     if (!linkRef.current) return;
     const { x, y } = linkRef.current.getBoundingClientRect();
+    // @ts-ignore
     linkRef.current.style.setProperty("--x", e.clientX - x);
+    // @ts-ignore
     linkRef.current.style.setProperty("--y", e.clientY - y);
   };
 
@@ -41,7 +43,7 @@ const GlassSocialLink = ({
         style={{
           background:
             "linear-gradient( 120deg,rgba( 255, 255, 255, 0.23 ) 10%, rgba( 255, 255, 255, 0.05 ) 100% )",
-          boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+          boxShadow: "0 8px 32px 0 rgba( 30, 30, 30, 0.3 )",
           backdropFilter: "blur( 13.5px )",
           WebkitBackdropFilter: "blur( 13.5px )",
           borderRadius: roundedSocials ? "999px" : "6px",

@@ -14,7 +14,7 @@ const GlassAvatar = () => {
       style={{
         background:
           "linear-gradient( 120deg,rgba( 255, 255, 255, 0.38 ) 10%, rgba( 255, 255, 255, 0.10 ) 100% )",
-        boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+        boxShadow: "0 8px 32px 0 rgba( 30, 30, 30, 0.3 )",
         backdropFilter: "blur( 13.5px )",
         WebkitBackdropFilter: "blur( 13.5px )",
         border: "1px solid rgba( 255, 255, 255, 0.18 )",

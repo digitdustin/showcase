@@ -6,7 +6,6 @@ import IconInput from "./IconInput";
 import Input from "./Input";
 import ColorPicker from "./ColorPicker";
 import useSiteShot from "../../hooks/useSiteShot";
-import Seaweed from "../../assets/seaweed.jpeg";
 import Modal from "../shared/Modal";
 import TypeSelector from "./TypeSelector";
 import TextArea from "./TextArea";

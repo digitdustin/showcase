@@ -49,17 +49,25 @@ const GlassSettings = ({
     ["#1F9EA3", "#F8BD97", "#3B0102", "#9E5428", "#BFB992"],
     ["#4A4E4D", "#0E9AA7", "#3DA4AB", "#F6CD61", "#FE8A71"],
     ["#043D5D", "#032E46", "#0F595E", "#23B684", "#FFFFFF"],
+    ["#2C3639", "#3F4E4F", "#A27B5C", "#DCD7C9", "#064663"],
+    ["#ef476f", "#ffd166", "#06d6a0", "#118ab2", "#073b4c"],
+    ["#000814", "#001d3d", "#003566", "#ffc300", "#ffd60a"],
+    ["#390099", "#9e0059", "#ff0054", "#ff5400", "#ffbd00"],
   ];
 
   const randomizeColors = () => {
-    // return list of 4 colors from a random entry of randomArrays
+    // return list of 4 distinct colors from a random entry of randomArrays
     const randomArray =
       randomArrays[Math.floor(Math.random() * randomArrays.length)];
-    const randomColors = [];
+    const randomColors: string[] = [];
     for (let i = 0; i < 4; i++) {
-      randomColors.push(
-        randomArray[Math.floor(Math.random() * randomArray.length)]
-      );
+      const randomColor =
+        randomArray[Math.floor(Math.random() * randomArray.length)];
+      if (!randomColors.includes(randomColor)) {
+        randomColors.push(randomColor);
+      } else {
+        i--;
+      }
     }
     setBackgroundColors(randomColors);
   };
@@ -136,7 +144,7 @@ const GlassSettings = ({
               <RangeInput
                 value={overlayOpacity}
                 setValue={setOverlayOpacity}
-                min={0}
+                min={0.05}
                 max={1}
                 step={0.01}
               />

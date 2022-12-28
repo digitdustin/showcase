@@ -71,7 +71,7 @@
 }
 
 
-// target the div of hieght 30px of the third child of the twitter-picker div
+
 
 .editor-color-picker .twitter-picker > div:nth-child(3) > div:nth-last-child(3) {
   display: none !important;
@@ -125,4 +125,10 @@
 
 .shiny:hover::after {
   opacity: 0.4;
+}
+
+
+.icon path {
+  vector-effect: non-scaling-stroke !important;
+  stroke-width: 2px !important;
 }

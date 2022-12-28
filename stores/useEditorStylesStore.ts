@@ -2,6 +2,22 @@ import create from "zustand";
 import { FontObject, fonts } from "../constants/testData";
 
 export type EditorStyle = "flat" | "brutalist" | "glass";
+export type BannerType = "image" | "icons";
+export type IconsTheme =
+  | "business"
+  | "chemistry"
+  | "communications"
+  | "design"
+  | "e-commerce"
+  | "food"
+  | "games"
+  | "mechanisms"
+  | "space"
+  | "sustainable-energy";
+
+/**
+ * Business Chemistry Communications Design E-commerce Food Games Mechanisms Space Sustainable Energy
+ */
 
 interface EditorStyleStore {
   backgroundColor: string;
@@ -22,6 +38,14 @@ interface EditorStyleStore {
   setRoundedSocials: (roundedSocials: boolean) => void;
   avatarShape: "circle" | "square";
   setAvatarShape: (avatarShape: "circle" | "square") => void;
+  bannerType: BannerType;
+  setBannerType: (bannerType: BannerType) => void;
+  iconsColor: string;
+  setIconsColor: (iconsColor: string) => void;
+  iconsBackgroundColor: string;
+  setIconsBackgroundColor: (iconsBackgroundColor: string) => void;
+  iconsTheme: IconsTheme;
+  setIconsTheme: (iconsTheme: IconsTheme) => void;
 }
 
 export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
@@ -44,4 +68,13 @@ export const useEditorStylesStore = create<EditorStyleStore>((set) => ({
   setRoundedSocials: (roundedSocials: boolean) => set({ roundedSocials }),
   avatarShape: "circle",
   setAvatarShape: (avatarShape: "circle" | "square") => set({ avatarShape }),
+  bannerType: "icons",
+  setBannerType: (bannerType: BannerType) => set({ bannerType }),
+  iconsColor: "#2d2d2d",
+  setIconsColor: (iconsColor: string) => set({ iconsColor }),
+  iconsBackgroundColor: "#ffffff",
+  setIconsBackgroundColor: (iconsBackgroundColor: string) =>
+    set({ iconsBackgroundColor }),
+  iconsTheme: "food",
+  setIconsTheme: (iconsTheme: IconsTheme) => set({ iconsTheme }),
 }));
