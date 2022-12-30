@@ -21,7 +21,7 @@ const EditorHeader = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div className="group hidden cursor-pointer justify-between rounded-md border border-indigo-50/20 bg-indigo-50/10 text-sm text-white/70 sm:flex">
-            <p className="py-1 px-6">totem.bio/digitdustin</p>
+            <p className="py-1 px-6">totem.pole/digitdustin</p>
             <div className="flex items-center justify-center rounded-r-[5px] border-l border-l-indigo-50/20 bg-indigo-50/10 px-2 transition group-hover:bg-indigo-50/20">
               <ClipboardIcon className="h-4 w-4 text-white/70" />
             </div>

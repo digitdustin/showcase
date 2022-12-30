@@ -6,7 +6,7 @@ import { useGlassStyleStore } from "../../../../stores/useGlassStyleStore";
 import { usePageContentStore } from "../../../../stores/usePageContentStore";
 import ColorPicker from "../../../ProjectModal/ColorPicker";
 import { AnimateHeight } from "../../../shared/AnimateHeight";
-import { PanelSection, RangeInput, Toggle } from "../AdvancedSettings";
+import { PanelSection, RangeInput, Toggle } from "../SettingsPanel";
 
 const GlassSettings = ({
   setSocialModalOpen,
