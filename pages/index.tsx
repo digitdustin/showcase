@@ -1,135 +1,86 @@
-import { useState, useRef, useLayoutEffect, useEffect } from "react";
-import ProjectModal from "../components/ProjectModal/ProjectModal";
-import { CameraIcon, PlusIcon } from "@heroicons/react/24/solid";
-import {
-  AdjustmentsHorizontalIcon,
-  QueueListIcon,
-  Squares2X2Icon,
-  ArrowPathIcon,
-  PaintBrushIcon,
-  AtSymbolIcon,
-} from "@heroicons/react/24/outline";
-import { ColorCombo, colorCombos } from "../constants/testData";
-import { appearAnim } from "../constants/variants";
-import {
-  EditorStyle,
-  useEditorStylesStore,
-} from "../stores/useEditorStylesStore";
-import EditorHeader from "../components/shared/EditorHeader";
-import Tooltip from "../components/shared/Tooltip";
-import ColorComboSelector from "../components/ProjectModal/ColorComboSelector";
-import { handleFileUpload } from "../utils/images/imageUtils";
-import Avatar from "../components/Editor/Avatar";
-import SocialsModal from "../components/Editor/SocialsModal/SocialsModal";
-import { usePageContentStore } from "../stores/usePageContentStore";
-import { Toaster } from "react-hot-toast";
-import FontDropdown from "../components/Editor/FontDropdown";
-import BaseEditor from "../components/Editor/BaseEditor/BaseEditor";
-import GlassEditor from "../components/Editor/GlassEditor/GlassEditor";
-import { AnimatePresence } from "framer-motion";
-import { motion as m } from "framer-motion";
-import MobileHeader from "components/shared/MobileHeader";
-import WebHeader from "components/shared/WebHeader";
-import SettingsPanel from "../components/Editor/AdvancedSettings/SettingsPanel";
-import { useControlsStore } from "stores/useControlsStore";
+import { Notebook } from "components/Landing/Cards/Notebook";
+import GradientHeaderLogo from "components/Landing/GradientHeaderLogo";
+import React from "react";
 
-export default function Home() {
-  const {
-    backgroundColor,
-    setBackgroundColor,
-    textColor,
-    setTextColor,
-    font,
-    extendedSocials,
-    setExtendedSocials,
-  } = useEditorStylesStore((state) => state);
-
-  const { pageTheme, setPageTheme } = usePageContentStore((state) => state);
-
-  const [projects, setProjects] = useState([]);
-
-  const [projectModalOpen, setProjectModalOpen] = useState<boolean>(false);
-  const [socialModalOpen, setSocialModalOpen] = useState<boolean>(false);
-
-  const [colorCombo, setColorCombo] = useState<ColorCombo>(colorCombos[0]);
-  const [invertColors, setInvertColors] = useState<boolean>(false);
-
-  const { settingsOpen, setSettingsOpen, setActiveSettingsPanel } =
-    useControlsStore();
-
-  const [avatarShape, setAvatarShape] = useState<"circle" | "square">("circle");
-
+const index = () => {
   return (
-    <div className="relative flex h-screen min-h-screen w-full flex-col overflow-hidden bg-slate-50">
-      <Toaster />
-      {/* Logo Header */}
-      <EditorHeader />
-
-      {/* Project Modal */}
-      <ProjectModal
-        isOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
-      <SocialsModal
-        isOpen={socialModalOpen}
-        onClose={() => {
-          setSocialModalOpen(false);
+    <div className="flex h-full min-h-screen w-full flex-col overflow-hidden bg-dark-900">
+      {/* Header */}
+      <div className="w-full bg-dark-900 py-2">
+        <div className="mx-auto flex h-full w-full items-center justify-between px-4 sm:px-6">
+          <div className="flex items-center">
+            <div className="mr-2 h-6 w-auto rounded-full">
+              <GradientHeaderLogo />
+            </div>
+            <h1 className="mr-2 font-grotesque text-lg font-semibold text-white">
+              Totem
+            </h1>
+          </div>
+          <button className="group relative flex items-center justify-center overflow-hidden rounded-lg p-[2px] text-white/90 transition duration-500 hover:text-white">
+            <div className="absolute inset-0 z-10 h-full w-full scale-[4] bg-gradient-to-br from-black to-transparent transition duration-500 group-hover:rotate-180" />
+            <div className="absolute inset-0 scale-[4] bg-fuchsia-400  transition-all duration-500 group-hover:bg-indigo-400"></div>
+            <span className="z-10 rounded-md bg-dark-900 px-4 py-2 text-sm">
+              <p className="flex items-center">
+                <span>&nbsp;Create your Totem</span>
+              </p>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundImage: "radial-gradient(#e879f9 1px, transparent 0)",
+          backgroundSize: "40px 40px",
+          backgroundPosition: "-19px -19px",
         }}
-      />
-      <MobileHeader />
-      <WebHeader />
-      <div className={`flex h-full w-full overflow-hidden`}>
+        className="relative flex w-full flex-1 items-center justify-center bg-dark-900"
+      >
+        {/* Radial Gradient */}
         <div
-          className={`flex h-full w-full flex-col transition-all md:ml-[4.5rem] ${
-            settingsOpen && "lg:ml-[28.5rem]"
-          }`}
-        >
-          {/* Settings Header */}
-          <div
-            className={`h-auto w-full overflow-y-auto bg-slate-200 p-4 ${font.className}`}
-          >
-            <AnimatePresence mode="wait">
-              {pageTheme === "flat" || pageTheme === "brutalist" ? (
-                <AnimatedEditorContainer key="base">
-                  <BaseEditor
-                    projectModalOpen={projectModalOpen}
-                    setProjectModalOpen={setProjectModalOpen}
-                    socialModalOpen={socialModalOpen}
-                    setSocialModalOpen={setSocialModalOpen}
-                  />
-                </AnimatedEditorContainer>
-              ) : (
-                <AnimatedEditorContainer key="glass">
-                  <GlassEditor
-                    projectModalOpen={projectModalOpen}
-                    setProjectModalOpen={setProjectModalOpen}
-                    socialModalOpen={socialModalOpen}
-                    setSocialModalOpen={setSocialModalOpen}
-                  />
-                </AnimatedEditorContainer>
-              )}
-            </AnimatePresence>
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 50% 90%, transparent 20%, rgba(20, 20, 20, .8), rgba(20, 20, 20, 1) 90%)",
+          }}
+          className="absolute inset-0 z-0 h-full w-full"
+        />
+        <div className="-mt-72 flex flex-col items-center px-10">
+          <div className="absolute -bottom-20 w-[550px] sm:w-[700px] md:-bottom-36 md:w-[800px] lg:-bottom-52 lg:w-[900px]">
+            <Notebook />
+          </div>
+
+          <h1 className="z-20 text-center font-grotesque text-4xl font-semibold text-white">
+            Your new,&nbsp;
+            <span className="relative bg-gradient-to-br from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
+              <div className="absolute inset-0">
+                <span className="neon bg-gradient-to-br from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent opacity-50">
+                  beautified
+                </span>
+              </div>
+              beautified
+            </span>
+            &nbsp;link in bio.
+          </h1>
+          <p className="z-20 mt-4 px-10 text-center text-base text-white/70">
+            Totem is a beautiful, customizable link in bio made for creators,
+            builders, and designers.
+          </p>
+
+          <div className="z-20 mt-8 flex flex-col items-center">
+            <div className="flex items-center rounded-md border border-dark-700 bg-dark-900 p-1 shadow-lg shadow-violet-400/10">
+              <p className="pl-2 text-right text-white">totem.bio/</p>
+              <input
+                className="ml-1 rounded-md bg-dark-900 py-2 pr-4 text-white/90 !outline-none"
+                placeholder="username"
+              />
+              <button className="ml-2 rounded-sm bg-gradient-to-br from-fuchsia-400 to-indigo-400 px-4 py-2 text-white">
+                Reserve
+              </button>
+            </div>
           </div>
         </div>
-        <SettingsPanel setSocialModalOpen={setSocialModalOpen} />
       </div>
     </div>
   );
-}
-
-const AnimatedEditorContainer = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  return (
-    <m.div
-      variants={appearAnim}
-      initial="hidden"
-      animate="visible"
-      exit="hidden"
-    >
-      {children}
-    </m.div>
-  );
 };
+
+export default index;

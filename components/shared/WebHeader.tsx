@@ -36,9 +36,9 @@ const WebHeader = () => {
               className={`flex w-full flex-col items-center justify-center space-y-2 rounded-md p-1 font-sans transition`}
             >
               <div
-                className={`group relative aspect-square cursor-pointer rounded-2xl bg-dark-700 p-3 ${
+                className={`group relative aspect-square cursor-pointer rounded-2xl border border-dark-700 bg-dark-700 p-3 transition ${
                   activeSettingsPanel === panel.name
-                    ? "border border-indigo-500 bg-indigo-800/20"
+                    ? "border-indigo-500 bg-indigo-800/20"
                     : ""
                 } `}
               >

@@ -132,3 +132,124 @@
   vector-effect: non-scaling-stroke !important;
   stroke-width: 2px !important;
 }
+
+
+@keyframes neon {
+  from {
+    transform: scale(1.0125);
+    filter: blur(0.1em) contrast(200%);
+  }
+  to {
+    transform: scale(1.00125);
+    filter: blur(0.15em) contrast(200%);
+  }
+}
+
+.neon {
+  animation: neon 800ms ease-in-out infinite alternate;
+}
+
+
+
+
+
+
+
+
+:root {
+  --gridBase: 3;
+  --cellSize: 90px;
+  --f900: clamp(20px, 3rem, 64px);
+  --f800: clamp(18px, 2rem, 24px);
+  --f600: clamp(12px, 0.8rem, 16px);
+  --f200: clamp(10px, 0.5rem, 14px);
+}
+
+@media screen and (max-width: 1280px) {
+  :root {
+    --gridBase: 3;
+    --cellSize: 80px;
+  }
+}
+@media screen and (max-width: 1110px) {
+  :root {
+    --gridBase: 3;
+    --cellSize: 90px;
+  }
+}
+@media screen and (max-width: 720px) {
+  :root {
+    --gridBase: 3;
+    --cellSize: 70px;
+  }
+}
+@media screen and (max-width: 520px) {
+  :root {
+    --gridBase: 1;
+    --cellSize: 280px;
+  }
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--cellSize), 1fr));
+  grid-gap: 12px;
+  grid-auto-flow: row dense;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.tileWrapper {
+  position: relative;
+  padding-top: 100%;
+  border-radius: 8px;
+  outline: none;
+}
+
+.tile {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 520px) {
+  .tileWrapper {
+    grid-row: span 1 !important;
+    grid-column: span 1 !important;
+  }
+}
+
+.view {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: transparent !important;
+}
+
+.joystick {
+  position: absolute;
+  width: auto;
+  display: flex;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 14px;
+  background: hsla(0, 0%, 0%, 0.2);
+  padding: 4px 8px;
+  border-radius: 100px;
+  font-weight: 300;
+  backdrop-filter: blur(32px);
+  color: white;
+  pointer-events: none;
+}
