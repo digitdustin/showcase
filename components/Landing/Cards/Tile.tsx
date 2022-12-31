@@ -1,6 +1,15 @@
-import { useLayoutEffect, useRef, forwardRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
 
-export const Tile = forwardRef(
+type TileProps = {
+  children: React.ReactNode;
+  col?: number;
+  row?: number;
+  perspective?: boolean;
+  dark?: boolean;
+  perspectiveDist?: number;
+};
+
+export const Tile = forwardRef<HTMLDivElement, TileProps>(
   (
     {
       children,
@@ -12,8 +21,9 @@ export const Tile = forwardRef(
     },
     ref
   ) => {
-    useLayoutEffect(() => {
+    useEffect(() => {
       function setupTile() {
+        if (!wrapperRef.current) return;
         wrapperRef.current.setAttribute(
           "style",
           `--ts: ${wrapperRef.current.getBoundingClientRect().width}px;
@@ -32,7 +42,7 @@ export const Tile = forwardRef(
       setupTile();
     });
 
-    const wrapperRef = useRef();
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     return (
       <div ref={wrapperRef} className="tileWrapper">
@@ -52,6 +62,6 @@ export const Tile = forwardRef(
   }
 );
 
-export const s = (number) => {
+export const s = (number: number) => {
   return `calc(var(--ts) * ${number})`;
 };

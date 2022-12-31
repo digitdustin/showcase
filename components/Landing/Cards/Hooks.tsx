@@ -1,23 +1,23 @@
 import { useState, useLayoutEffect, useRef } from "react";
 
 export const useParentSize = () => {
-  const parentRef = useRef(null);
-  const [width, setWidth] = useState(0);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState<number>(0);
 
   useLayoutEffect(() => {
-    const handlSetWidth = () => {
+    const handleSetWidth = () => {
       if (parentRef.current) {
         setWidth(parentRef.current.offsetWidth);
       }
     };
 
     function handleResize() {
-      handlSetWidth();
+      handleSetWidth();
     }
 
     window.addEventListener("resize", handleResize);
 
-    handlSetWidth();
+    handleSetWidth();
   }, []);
 
   return [parentRef, width];

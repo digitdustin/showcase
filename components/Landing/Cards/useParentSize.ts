@@ -1,6 +1,8 @@
 import { useState, useLayoutEffect, useRef } from "react";
 
-export const useParentSize = () => {
+type ParentSize = [React.MutableRefObject<HTMLDivElement | null>, number];
+
+export const useParentSize = (): ParentSize => {
   const parentRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
 
@@ -18,6 +20,8 @@ export const useParentSize = () => {
     window.addEventListener("resize", handleResize);
 
     handleSetWidth();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return [parentRef, width];

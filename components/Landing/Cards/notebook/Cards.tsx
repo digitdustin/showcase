@@ -1,5 +1,5 @@
 import { Tile } from "../Tile";
-import { motion, useSpring } from "framer-motion";
+import { motion, PanInfo, useSpring } from "framer-motion";
 import { useParentSize } from "../Hooks";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 const data = ["a", "b", "c", "d", "e"];
 
 // Mapping function to create duplicates with UIDs
-const mapData = (data, prefix) =>
+const mapData = (data: string[], prefix: string) =>
   data.map((item, i) => ({
     id: `${prefix}${i}`,
     content: item,
@@ -29,62 +29,49 @@ const dataClone = [
   ...mapData(data, "4"),
 ];
 
-// ************************************************** //
-// *                                                * //
-// *       https://twitter.com/wojciech_dobry       * //
-// *      for more interaction design content,      * //
-// *         just hit the follow button  :)         * //
-// *                                                * //
-// ************************************************** //
+type CardsProps = {
+  col: number;
+  row: number;
+};
 
-// ************************************************** //
-// *                                                * //
-// *        This code is more of a prototype.       * //
-// *   T'd optimize if before using in production   * //
-// *                                                * //
-// ************************************************** //
+export const Cards = ({ col, row }: CardsProps) => {
+  const [parentRef, width] = useParentSize();
+  const ref = parentRef as React.MutableRefObject<HTMLDivElement>;
+  const size = width as number;
+  const [current, setCurrent] = useState(0);
+  const [arr, setArr] = useState(dataClone);
 
-export const Cards = ({ col, row }) => {
-  // I like to work with relative sizes, rather than px
-  // useParentSize gets parent size, so I can
-  // size everything relatively to the container.
-  // You can work with pixels if you like
-
-  const [ref, size] = useParentSize();
-  const [state, setState] = useState({ current: 0, arr: dataClone });
-
-  //rotate array every 3 seconds
   useEffect(() => {
-    setTimeout(() => {
+    const interval = setInterval(() => {
       rotateArray(1);
+      console.log("current", current);
     }, 3000);
-  }, []);
+    return () => clearInterval(interval);
+  }, [current]);
 
-  // A function to rotate the array by n steps
-  // (btw. This could be a signle loop)
-  // I just find it easier to read
-
-  const rotateArray = (n = 1) => {
-    const newArr = [...state.arr];
+  const rotateArray = (n: number = 1) => {
+    const newArr = [...arr];
     if (n > 0) {
       for (let i = 0; i < n; i++) {
         const first = newArr.shift();
+        if (!first) return;
         newArr.push(first);
       }
-      setState({ current: n, arr: newArr });
+      setCurrent(current + 1);
+      setArr(newArr);
     } else {
       for (let i = 0; i < -n; i++) {
         const last = newArr.pop();
+        if (!last) return;
         newArr.unshift(last);
       }
-      setState({ current: n, arr: newArr });
+      setCurrent(n);
+      setArr(newArr);
     }
   };
 
   return (
     <Tile
-      captionTop="3D Cards – Framer Motion"
-      captionBot="By Wojciech Dobry"
       col={col}
       row={row}
       ref={ref}
@@ -94,7 +81,7 @@ export const Cards = ({ col, row }) => {
       // with the parent container
       perspectiveDist={size / 2}
     >
-      {state.arr.map(
+      {arr.map(
         (item, i) =>
           // Render only first 3 copies of data.
           // The fourth copy should be out of render,
@@ -104,12 +91,11 @@ export const Cards = ({ col, row }) => {
             <Card
               key={item.id}
               i={i}
-              current={state.current}
+              current={current}
               name={item.content}
               rotateArray={rotateArray}
               length={data.length}
               size={size}
-              style={state.style}
             />
           )
       )}
@@ -126,15 +112,22 @@ const spring = {
   restSpeed: 0.0001,
 };
 
-const Card = ({ i, name, length, size, rotateArray, current }) => {
+type CardProps = {
+  i: number;
+  name: string;
+  length: number;
+  size: number;
+  rotateArray: (n: number) => void;
+  current: number;
+};
+
+const Card = ({ i, name, length, size, rotateArray, current }: CardProps) => {
   // Card is sized relatively to the container,
   // just to maintain all ratios.
 
   const cardWidth = size * 0.45 * 1;
   const cardHeight = size * 0.65 * 1;
 
-  // Bunch of helpers
-  // to get the correct array slice
   const { isLeft, isFirst, isCenter, isRight } = {
     isLeft: i < length,
     isFirst: i === length,
@@ -152,12 +145,11 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
 
   // I don't want any card to be darker
   // than the background itself
-  const clampLightness = (value) => Math.max(value, bgLightness);
+  const clampLightness = (value: number) => Math.max(value, bgLightness);
 
-  // Helpers, helpers, helpers...
-  const lightnessHSL = (value) => `hsl(0,0%,${clampLightness(value)}%)`;
-  const offsetCalc = (start, step) => start * size + step * i;
-  const backgroundCalc = (start, step) =>
+  const lightnessHSL = (value: number) => `hsl(0,0%,${clampLightness(value)}%)`;
+  const offsetCalc = (start: number, step: number) => start * size + step * i;
+  const backgroundCalc = (start: number, step: number) =>
     lightnessHSL(start + step * iFromFirst);
 
   // Actual styles for each card set.
@@ -168,7 +160,7 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
   // – right (out of container but matters for initial animation)
 
   const styles = {
-    [isLeft]: {
+    isLeft: {
       posX: offsetCalc(-2.25, 0),
       posY: offsetCalc(-0.25, 1),
       posZ: offsetCalc(0, 1),
@@ -177,7 +169,7 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
       rotZ: -90,
       background: backgroundCalc(95, 0),
     },
-    [isFirst]: {
+    isFirst: {
       posX: offsetCalc(-0.15, -cardWidth / 6 / i),
       posY: offsetCalc(-0.25, 1),
       posZ: offsetCalc(0, 1),
@@ -186,7 +178,7 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
       rotZ: 0,
       background: backgroundCalc(95, 0),
     },
-    [isCenter]: {
+    isCenter: {
       posX: offsetCalc(-0.65, 0.3 * cardWidth),
       posY: offsetCalc(-0.25, 2),
       posZ: offsetCalc(-0.25, -i * i * 0.65),
@@ -195,7 +187,7 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
       rotZ: -35 + i * 6.5,
       background: backgroundCalc(100, -25),
     },
-    [isRight]: {
+    isRight: {
       posX: offsetCalc(2.5, 0),
       posY: offsetCalc(0.25, 0),
       posZ: offsetCalc(-0.25, -20),
@@ -208,7 +200,15 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
 
   // All cards are styled based on their index:
   const { posX, posY, posZ, background, rotX, rotY, rotZ } =
-    styles[isLeft || isRight || isCenter || isFirst];
+    styles[
+      isLeft
+        ? "isLeft"
+        : isFirst
+        ? "isFirst"
+        : isCenter
+        ? "isCenter"
+        : "isRight"
+    ];
 
   // Springs for drag animation
   const dPosX = useSpring(posX, spring);
@@ -221,7 +221,7 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
 
   // This function controlls the drag behavior
   // and constrains verical and horizontal drag force
-  const setXY = (info, consX, consY) => {
+  const setXY = (info: PanInfo, consX: number, consY: number) => {
     dPosX.set(posX + (info.offset.x * size * consX) / 1000);
     dPosY.set(posY + (info.offset.y * size * consY) / 1000);
     dRotX.set(rotX + ((info.offset.y / size) * 40000 * consY) / 1000);
@@ -229,7 +229,7 @@ const Card = ({ i, name, length, size, rotateArray, current }) => {
     dRotZ.set(rotZ + ((info.offset.x / size) * 120000 * consY) / 1000);
   };
 
-  const handlePanEnd = (info) => {
+  const handlePanEnd = (info: PanInfo) => {
     const minVelocity = Math.abs(info.velocity.x) > 80;
     const minDistance = Math.abs(info.offset.x) > size / 48;
     const direction = info.offset.x > 0 ? -1 : 1;

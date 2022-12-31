@@ -43,7 +43,7 @@ const index = () => {
           }}
           className="absolute inset-0 z-0 h-full w-full"
         />
-        <div className="-mt-72 flex flex-col items-center px-10">
+        <div className="-mt-72 flex flex-col items-center px-8">
           <div className="absolute -bottom-20 w-[550px] sm:w-[700px] md:-bottom-36 md:w-[800px] lg:-bottom-52 lg:w-[900px]">
             <Notebook />
           </div>
@@ -51,11 +51,9 @@ const index = () => {
           <h1 className="z-20 text-center font-grotesque text-4xl font-semibold text-white">
             Your new,&nbsp;
             <span className="relative bg-gradient-to-br from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
-              <div className="absolute inset-0">
-                <span className="neon bg-gradient-to-br from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent opacity-50">
-                  beautified
-                </span>
-              </div>
+              <span className="neon absolute inset-0 bg-gradient-to-br from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent opacity-50">
+                beautified
+              </span>
               beautified
             </span>
             &nbsp;link in bio.
