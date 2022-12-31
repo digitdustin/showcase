@@ -2,6 +2,7 @@ import { Tile } from "../Tile";
 import { motion, PanInfo, useSpring } from "framer-motion";
 import { useParentSize } from "../Hooks";
 import { useEffect, useState } from "react";
+import meshBG from "assets/previews/meshBG3.gif";
 
 //  Create some data where each item
 //  in the array will represent an unique card
@@ -45,7 +46,7 @@ export const Cards = ({ col, row }: CardsProps) => {
     const interval = setInterval(() => {
       rotateArray(1);
       console.log("current", current);
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [current]);
 
@@ -304,7 +305,11 @@ const Card = ({ i, name, length, size, rotateArray, current }: CardProps) => {
         }}
       >
         <div className="flex h-full w-full flex-col items-center justify-start text-xs">
-          <div className="-z-10 h-32 w-full bg-violet-600/50"></div>
+          <img
+            src={meshBG.src}
+            alt="mesh"
+            className="h-full w-full object-fill"
+          />
         </div>
       </div>
     </motion.div>
