@@ -65,7 +65,7 @@ const index = () => {
 
           <div className="z-20 mt-8 flex flex-col items-center">
             <div className="flex items-center rounded-md border border-dark-700 bg-dark-900 p-1 shadow-lg shadow-violet-400/10">
-              <p className="pl-2 text-right text-white">totem.bio/</p>
+              <p className="pl-2 text-right text-white">totem.co/</p>
               <input
                 className="ml-1 rounded-md bg-dark-900 py-2 pr-4 text-white/90 !outline-none"
                 placeholder="username"

@@ -2,6 +2,7 @@ import {
   AdjustmentsHorizontalIcon,
   AtSymbolIcon,
   PaintBrushIcon,
+  PlusIcon,
   QueueListIcon,
   RectangleStackIcon,
   SwatchIcon,
@@ -27,6 +28,23 @@ const WebHeader = () => {
     >
       <div className="flex h-full w-full flex-col space-y-2">
         <div className="flex flex-col items-center space-y-2 text-white">
+          <button
+            onClick={() => {
+              setSettingsOpen(true);
+            }}
+            className={`flex w-full flex-col items-center justify-center space-y-2 rounded-md p-1 font-sans transition`}
+          >
+            <div
+              style={{
+                boxShadow: "0 4px 24px 0 rgba( 99, 102, 241, 0.6 )",
+              }}
+              className={`group relative aspect-square cursor-pointer rounded-2xl bg-indigo-500 p-3 transition hover:shadow-xl`}
+            >
+              <Tooltip position="right">Insert</Tooltip>
+              <PlusIcon className="h-5 w-5" />
+            </div>
+            <p className="text-xs text-white">Insert</p>
+          </button>
           {settingsPanels.map((panel) => (
             <button
               onClick={() => {
@@ -37,7 +55,7 @@ const WebHeader = () => {
             >
               <div
                 className={`group relative aspect-square cursor-pointer rounded-2xl border border-dark-700 bg-dark-700 p-3 transition ${
-                  activeSettingsPanel === panel.name
+                  settingsOpen && activeSettingsPanel === panel.name
                     ? "border-indigo-500 bg-indigo-800/20"
                     : ""
                 } `}

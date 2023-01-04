@@ -1,19 +1,143 @@
 import { Tile } from "../Tile";
 import { motion, PanInfo, useSpring } from "framer-motion";
 import { useParentSize } from "../Hooks";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import meshBG from "assets/previews/meshBG3.gif";
+import { SocialIcon } from "react-social-icons";
+import {
+  GlassLinkPreview,
+  GlassPreview,
+  GlassSocialPreview,
+  Preview,
+} from "./Previews";
+import patternBG from "assets/previews/patternBG.png";
+import coffeePattern from "assets/previews/coffeePattern.png";
+import iconsBG from "assets/previews/iconsBG.gif";
 
-//  Create some data where each item
-//  in the array will represent an unique card
+const data = [
+  <GlassPreview
+    name="Dana Holland"
+    bio="Twitch Streamer + Gamer from London, UK"
+    socials={[
+      { network: "twitch", url: "https://twitch.tv/danaholland" },
+      { network: "twitter", url: "https://twitter.com/danaholland" },
+      { network: "instagram", url: "https://instagram.com/danaholland" },
+    ]}
+    links={[
+      { title: "My Website" },
+      { title: "Charity Stream" },
+      { title: "Wishlist" },
+    ]}
+    imageUrl="https://pbs.twimg.com/media/FjKpv2lXoAIZFlt?format=jpg&name=360x360"
+  />,
+  <Preview
+    name="Mike Lee"
+    bio="Entrepreneur + Founder of My Pack Life"
+    socials={[
+      { network: "email", url: "mikelee@mike.com" },
+      { network: "instagram", url: "https://instagram.com/mikelee" },
+      { network: "facebook", url: "https://facebook.com/mikelee" },
+      { network: "twitter", url: "https://twitter.com/mikelee" },
+    ]}
+    links={[
+      { title: "My Blog" },
+      { title: "PackLife Podcast" },
+      { title: "A Packer's Life: My Story" },
+      { title: "Meet your new packing buddy" },
+    ]}
+    avatarUrl="https://i.pinimg.com/originals/85/b0/ba/85b0ba44f5c399d51ffc6d197e93b3e8.jpg"
+    bannerUrl={
+      "https://discovery.sndimg.com/content/dam/images/discovery/editorial/shows/m/my-pack-life/My_Pack_Life_Lee_Asher_3x2_18.png.rend.hgtvcom.616.411.suffix/1644292228048.png"
+    }
+    backgroundColor="#F2F2F2"
+    fontFamily="Source Serif Pro"
+    textColor="#1F1D1C"
+    socialColor="#1F1D1C"
+    socialTextColor="#F2F2F2"
+    linkColor="#1F1D1C"
+    linkTextColor="#F2F2F2"
+  />,
 
-const data = ["a", "b", "c", "d", "e"];
+  <Preview
+    name="The Idea Lab"
+    bio="We are a creative and web development agency based in San Francisco, CA."
+    socials={[
+      { network: "email", url: "idealab@ideas.com" },
+      { network: "instagram", url: "https://instagram.com/idealab" },
+      { network: "facebook", url: "https://facebook.com/idealab" },
+      { network: "twitter", url: "https://twitter.com/idealab" },
+    ]}
+    links={[
+      { title: "Our Work" },
+      { title: "Our Team" },
+      { title: "Our Process" },
+      { title: "Our Clients" },
+    ]}
+    avatarUrl="https://i.pinimg.com/originals/83/db/5b/83db5bafd2d58355a1bd4babd4109e8d.jpg"
+    bannerUrl={iconsBG.src}
+    backgroundColor="#22086B"
+    fontFamily="Chivo Mono"
+    textColor="#fff"
+    socialColor="#53A2EE"
+    socialTextColor="#fff"
+    linkColor="#53A2EE"
+    linkTextColor="#fff"
+  />,
+  <Preview
+    name="Gavin Belson"
+    bio="Failure is growth. Failure is learning. But sometimes failure is just failure."
+    socials={[
+      { network: "twitter", url: "https://twitter.com/gavinbelson" },
+      { network: "instagram", url: "https://instagram.com/gavinbelson" },
+    ]}
+    links={[
+      { title: "Hooli" },
+      { title: "Nucleus" },
+      { title: "HooliX" },
+      { title: "Hooli Cloud" },
+    ]}
+    avatarUrl="https://media.licdn.com/dms/image/C5603AQELJdeNIQtl3Q/profile-displayphoto-shrink_800_800/0/1542153743923?e=2147483647&v=beta&t=RVv95dfGogDEbH-6Qhfli5lxxzwPd99NW-blKPZipLU"
+    bannerUrl="https://pbs.twimg.com/media/EgUmxERXsAA6Fs3.jpg:large"
+    backgroundColor="#001337"
+    fontFamily="ambit"
+    textColor="#fff"
+    socialColor="#00BCFD"
+    socialTextColor="#F2F2F2"
+    linkColor="#00BCFD"
+    linkTextColor="#F2F2F2"
+  />,
+  <Preview
+    name="The Roasted Bean"
+    bio="Coffee Shop in London, UK"
+    socials={[
+      { network: "email", url: "theroastedbean@gmail.com" },
+      { network: "instagram", url: "https://instagram.com/theroastedbean" },
+      { network: "facebook", url: "https://facebook.com/theroastedbean" },
+      { network: "twitter", url: "https://twitter.com/theroastedbean" },
+    ]}
+    links={[
+      { title: "Menu" },
+      { title: "Our Story" },
+      { title: "Hours of Operation" },
+      { title: "Meet the Team" },
+    ]}
+    avatarUrl="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/26712e66220799.5b0eb52c18dd8.jpg"
+    bannerUrl={coffeePattern.src}
+    backgroundColor="#C47C4F"
+    fontFamily="Ambit"
+    textColor="#1F1D1C"
+    socialColor="#1F1D1C"
+    socialTextColor="#C47C4F"
+    linkColor="#1F1D1C"
+    linkTextColor="#C47C4F"
+  />,
+];
 
 // Mapping function to create duplicates with UIDs
-const mapData = (data: string[], prefix: string) =>
+const mapData = (data: JSX.Element[], prefix: string) =>
   data.map((item, i) => ({
     id: `${prefix}${i}`,
-    content: item,
+    content: data[i],
   }));
 
 // Array we are going to work with
@@ -45,8 +169,7 @@ export const Cards = ({ col, row }: CardsProps) => {
   useEffect(() => {
     const interval = setInterval(() => {
       rotateArray(1);
-      console.log("current", current);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [current]);
 
@@ -115,7 +238,7 @@ const spring = {
 
 type CardProps = {
   i: number;
-  name: string;
+  name: JSX.Element;
   length: number;
   size: number;
   rotateArray: (n: number) => void;
@@ -148,10 +271,15 @@ const Card = ({ i, name, length, size, rotateArray, current }: CardProps) => {
   // than the background itself
   const clampLightness = (value: number) => Math.max(value, bgLightness);
 
+  const leftIndex = length * 2 - i;
   const lightnessHSL = (value: number) => `hsl(0,0%,${clampLightness(value)}%)`;
   const offsetCalc = (start: number, step: number) => start * size + step * i;
+  const leftOffsetCalc = (start: number, step: number) =>
+    start * size + step * leftIndex;
   const backgroundCalc = (start: number, step: number) =>
     lightnessHSL(start + step * iFromFirst);
+  const leftBackgroundCalc = (start: number, step: number) =>
+    lightnessHSL(start + step * (leftIndex - length));
 
   // Actual styles for each card set.
   // I want to have control over:
@@ -159,7 +287,6 @@ const Card = ({ i, name, length, size, rotateArray, current }: CardProps) => {
   // – center (visible cards)
   // – left (out of container but matters for exit animation)
   // – right (out of container but matters for initial animation)
-
   const styles = {
     isLeft: {
       posX: offsetCalc(-2.25, 0),
@@ -180,7 +307,7 @@ const Card = ({ i, name, length, size, rotateArray, current }: CardProps) => {
       background: backgroundCalc(95, 0),
     },
     isCenter: {
-      posX: offsetCalc(-0.65, 0.3 * cardWidth),
+      posX: offsetCalc(-0.75, 0.3 * cardWidth),
       posY: offsetCalc(-0.25, 2),
       posZ: offsetCalc(-0.25, -i * i * 0.65),
       rotX: i * -1,
@@ -305,11 +432,12 @@ const Card = ({ i, name, length, size, rotateArray, current }: CardProps) => {
         }}
       >
         <div className="flex h-full w-full flex-col items-center justify-start text-xs">
-          <img
+          {/* <img
             src={meshBG.src}
             alt="mesh"
             className="h-full w-full object-fill"
-          />
+          /> */}
+          {name}
         </div>
       </div>
     </motion.div>

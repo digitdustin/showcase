@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background: #de81f8;
+}
+
 .bouncing-loader {
   display: flex;
   justify-content: center;
